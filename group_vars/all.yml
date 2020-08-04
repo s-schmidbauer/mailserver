@@ -1,5 +1,8 @@
 fqdn: mail.schmidbauer.cz
 
+admin_user: puffy
+admin_pass: secret
+
 host_aliases:
   - mail
   - www
