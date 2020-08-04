@@ -1,4 +1,4 @@
---
+---
 ## install ldns-utils
 
 ## mkdir /etc/mail/dkim
@@ -12,4 +12,4 @@
 
 # mkdir /etc/rspamd/local.d
 # template dkim_signing.conf
-# copy dkim key 
+# copy dkim key
