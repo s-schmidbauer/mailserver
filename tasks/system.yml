@@ -11,6 +11,7 @@
       src: "system/{{ item }}"
       dest: "/etc/{{ item }}"
     with_items:
+      - doas.conf
       - myname
       - mygate
       - hosts

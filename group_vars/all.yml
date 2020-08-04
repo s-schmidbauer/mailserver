@@ -21,6 +21,10 @@ tls_ciphers: EECDH+AESGCM:EDH+AESGCM # httpd and dovecot
 tls_ecdhe: P-384,P-256,X25519 # httpd
 tls_min_version: TLSv1.2 # dovecot
 
+doas_groups_nopass:
+  - wheel
+doas_groups: None
+
 httpd_use_lets_encrypt: True
 httpd_enforce_tls: True
 httpd_redirect_default_vhost: True
