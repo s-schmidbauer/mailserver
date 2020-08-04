@@ -26,6 +26,19 @@ httpd_enforce_tls: True
 httpd_redirect_default_vhost: True
 httpd_redirect_default_vhost_destination: https://cloud.schmidbauer.cz/index.php/apps/rainloop/
 
+sysctl:
+  - { name: "kern.shminfo.shmmax, value: 134217728" }         # max size of shared memory segment (bytes)
+  - { name: "kern.shminfo.shmall, value: 524288" }            # total amount of sharedmemory available (pages)
+  - { name: "kern.shminfo.shmmni, value: 240" }               # max number of sharedmemory segments system-wide
+  - { name: "kern.seminfo.semmns, value: 360" }               # max number of semaphores system-wide (zabbix relevant)
+  - { name: "net.inet.ip.forwarding, value: 1" }
+  - { name: "net.inet6.ip6.forwarding, value: 1" }
+  - { name: "net.inet6.ip6.redirect, value: 1" }
+  - { name: "net.inet.esp.enable, value: 1" }
+  - { name: "net.inet.ah.enable, value: 0" }
+  - { name: "net.inet.ipcomp.enable, value: 1" }
+  - { name: "ddb.panic, value: 0" }
+
 cronjobs:
    - { name: "install system patches", special_time: weekly, job: "syspatch"  }
    - { name: "install package updates", special_time: weekly, job: "pkg_add -u"  }

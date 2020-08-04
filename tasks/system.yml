@@ -18,6 +18,7 @@
       - login.conf
       - installurl
       - profile
+      - sysctl.conf
     tags: sys-config
 
   - name: create admin user with password
