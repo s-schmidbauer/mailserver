@@ -1,8 +1,2 @@
-193.235.207.51  mail.schmidbauer.cz mail ns.schmidbauer.cz ns www www.schmidbauer.cz
-193.235.207.52  cloud ns2 ns2.schmidbauer.cz
-193.235.207.56  mon mon.schmidbauer.cz vpn vpn.schmidbauer.cz
-2a03:f80:420:193:235:207:51:2 man man.schmidbauer.cz
-2a03:f80:420:193:235:207:51:3 mon mon.schmidbauer.cz
-2a03:f80:420:193:235:207:51:4 vpn vpn.schmidbauer.cz
-2a03:f80:420:193:235:207:51:5 www www.schmidbauer.cz
-2a03:f80:420:193:235:207:51:6 cloud cloud.schmidbauer.cz
+{{ ipv4 }} {{ fqdn }} {{ hostname_aliases|join(' ') or '' }}
+{{ ipv6 }} {{ fqdn }} {{ hostname_aliases|join(' ') or '' }}
