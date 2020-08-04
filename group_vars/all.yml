@@ -17,18 +17,20 @@ ipv6: 2a03:f80:420:193:235:207:51:1
 ipv4_gw: 193.235.207.1
 ipv6_gw: 2a03:f80:420::1
 
-webmail: https://cloud.schmidbauer.cz/index.php/apps/rainloop/
-
 tls_ciphers: EECDH+AESGCM:EDH+AESGCM # httpd and dovecot
 tls_ecdhe: P-384,P-256,X25519 # httpd
 tls_min_version: TLSv1.2 # dovecot
+
+httpd_use_lets_encrypt: True
+httpd_enforce_tls: True
+httpd_redirect_default_vhost: True
+httpd_redirect_default_vhost_destination: https://cloud.schmidbauer.cz/index.php/apps/rainloop/
 
 cronjobs:
    - { name: "install system patches", special_time: weekly, job: "syspatch"  }
    - { name: "install package updates", special_time: weekly, job: "pkg_add -u"  }
    - { name: "refresh certs with acme-client", special_time: weekly, job: "acme-client {{ fqdn }} && rcctl reload httpd"  }
    - { name: "refresh ocsp with ocspcheck", special_time: daily, job: "ocspcheck -vN -o /etc/ssl/{{ fqdn }}.der /etc/ssl/{{ fqdn }}.fullchain.pem"  }
-
 
 aliases:
    - { name: cloud, target: stefan }
