@@ -1,0 +1,10 @@
+---
+
+# configure sieve like below
+# mkdir /usr/local/lib/dovecot/sieve
+# template sieve scripts
+
+# sievec report-ham.sieve
+# sievec report-spam.sieve
+# chmod 755 sa-learn-ham.sh
+# chmod 755 sa-learn-spam.sh

@@ -1,0 +1,17 @@
+---
+# configure system
+# create local user accounts and set their passwords
+
+# configure acme
+# configure httpd
+# get tls certificate
+# configure httpd again
+
+# configure rspamd and start it
+# setup dkim key
+# configure smtpd and start it
+# encrypt user system passwords for smtpd and put it in creds
+# configure sieve for dovecot
+# configure dovecot and start it
+
+# mail instructions for rdns, dkim, spf, dmarc and tlsa records to admin

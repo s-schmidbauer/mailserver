@@ -1,0 +1,4 @@
+--
+# setup let's encrypt
+# setup httpd
+# try creating cert and reloading httpd

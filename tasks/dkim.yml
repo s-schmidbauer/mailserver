@@ -1,0 +1,15 @@
+--
+## install ldns-utils
+
+## mkdir /etc/mail/dkim
+## openssl genrsa -out /etc/mail/dkim/hypno.cat.key 1024
+## openssl rsa -in /etc/mail/dkim/hypno.cat.key -pubout -out /etc/mail/dkim/hypno.cat.pub
+
+# get datestamp
+# generate dkim record with datestamp as selector and pub key
+# mail dkim record to admin
+
+
+# mkdir /etc/rspamd/local.d
+# template dkim_signing.conf
+# copy dkim key 
