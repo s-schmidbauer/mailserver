@@ -1,0 +1,17 @@
+# configure pf
+  tasks:
+  - name: "pf - configure /etc/pf.conf"
+    template:
+      src: "system/pf.conf"
+      dest: "/etc/pf.conf"
+    tags: pf
+
+  - name: pf - check conf
+    shell: pfctl -nf /etc/pf.conf
+    register: pf_result
+    tags: pf
+
+  - name: pf - activate pf
+    shell: pfctl -f /etc/pf.conf
+    when: pf_result|succeeded
+    tags: pf

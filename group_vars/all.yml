@@ -17,6 +17,24 @@ ipv6: 2a03:f80:420:193:235:207:51:1
 ipv4_gw: 193.235.207.1
 ipv6_gw: 2a03:f80:420::1
 
+ext_if: vio0
+net_speed: 125M # 1 Gbit
+net_speed_cap: 100M
+
+pf_max_src_conn: 50
+pf_max_src_conn_rate: 15/5
+
+pf_all_hosts_ports:
+  - 80
+  - 443
+
+pf_trusted_hosts:
+  - localhost
+  - 194.228.20.201
+
+pf_trusted_hosts_ports:
+  - 22
+
 tls_ciphers: EECDH+AESGCM:EDH+AESGCM # httpd and dovecot
 tls_ecdhe: P-384,P-256,X25519 # httpd
 tls_min_version: TLSv1.2 # dovecot
