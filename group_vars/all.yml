@@ -23,6 +23,13 @@ tls_ciphers: EECDH+AESGCM:EDH+AESGCM # httpd and dovecot
 tls_ecdhe: P-384,P-256,X25519 # httpd
 tls_min_version: TLSv1.2 # dovecot
 
+cronjobs:
+   - { name: "install system patches", special_time: weekly, job: "syspatch"  }
+   - { name: "install package updates", special_time: weekly, job: "pkg_add -u"  }
+   - { name: "refresh certs with acme-client", special_time: weekly, job: "acme-client {{ fqdn }} && rcctl reload httpd"  }
+   - { name: "refresh ocsp with ocspcheck", special_time: daily, job: "ocspcheck -vN -o /etc/ssl/{{ fqdn }}.der /etc/ssl/{{ fqdn }}.fullchain.pem"  }
+
+
 aliases:
    - { name: cloud, target: stefan }
    - { name: hello, target: stefan }

@@ -6,46 +6,18 @@
   become_method: doas
 
   tasks:
-  - name: configure /etc/myname
+  - name: "configure /etc/{{ item }}"
     template:
-      src: system/myname
-      dest: /etc/myname
-    tags: sys-config
-
-  - name: configure /etc/mygate
-    template:
-      src: system/mygate
-      dest: /etc/mygate
-    tags: sys-config
-
-  - name: configure /etc/hosts
-    template:
-      src: system/hosts
-      dest: /etc/hosts
-    tags: sys-config
-
-  - name: configure /etc/adduser.conf
-    template:
-      src: system/adduser.conf
-      dest: /etc/adduser.conf
-    tags: sys-config
-
-  - name: configure /etc/login.conf
-    template:
-      src: system/login.conf
-      dest: /etc/login.conf
-    tags: sys-config
-
-  - name: configure /etc/installurl
-    template:
-      src: system/installurl
-      dest: /etc/installurl
-    tags: sys-config
-
-  - name: configure /etc/profile
-    template:
-      src: system/profile
-      dest: /etc/profile
+      src: "system/{{ item }}"
+      dest: "/etc/{{ item }}"
+    with_items:
+      - myname
+      - mygate
+      - hosts
+      - adduser.conf
+      - login.conf
+      - installurl
+      - profile
     tags: sys-config
 
   - name: create admin user with password
@@ -59,30 +31,10 @@
     no_log: true
     tags: sys-config
 
-  - name: cron - weekly system patches
+  - name: configure cronjobs
     cron:
-      name: "install system patches"
-      special_time: weekly
-      job: "syspatch"
-    tags: sys-config
-
-  - name: cron - weekly package updates
-    cron:
-      name: "install package updates"
-      special_time: weekly
-      job: "pkg_add -u"
-    tags: sys-config
-
-  - name: cron - refresh certs with acme-client
-    cron:
-      name: "refresh certs with acme-client"
-      special_time: weekly
-      job: "acme-client {{ fqdn }} && rcctl reload httpd"
-    tags: sys-config
-
-  - name: cron - refresh ocsp with ocspcheck
-    cron:
-      name: "refresh ocsp with ocspcheck"
-      special_time: daily
-      job: "ocspcheck -vN -o /etc/ssl/{{ fqdn }}.der /etc/ssl/{{ fqdn }}.fullchain.pem"
+      name: "{{ item.name }}"
+      special_time: "{{ item.special_time }}"
+      job: "{{ item.job }}"
+    with_items: cronjobs
     tags: sys-config
