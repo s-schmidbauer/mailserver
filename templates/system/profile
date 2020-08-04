@@ -1,0 +1,3 @@
+HISTFILE=$HOME/.history
+HISTSIZE=500
+PATH=$PATH:/usr/local/bin:/usr/local/sbin
