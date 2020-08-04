@@ -12,19 +12,10 @@
 # Basic system aliases -- these MUST be present
 MAILER-DAEMON: postmaster
 postmaster: root
-cloud: stefan
-hello: stefan
-hallo: stefan
-ahoj: stefan
-puffy: stefan
-monitoring: stefan
-stefan@schmidbauer.cz: stefan
-anna@schmidbauer.cz: anna
-max@schmidbauer.cz: max
-mattias@schmidbauer.cz: mattias
-hans@schmidbauer.cz: hans
-angelika@schmidbauer.cz: angelika
-chiemseewelle@schmidbauer.cz: chiemseewelle
+
+{% for alias in aliases %}
+{{ alias[name]: alias[target] }}
+{% endfor %}
 
 # General redirections for important pseudo accounts
 daemon:	root

@@ -1,0 +1,17 @@
+fqdn: mail.schmidbauer.cz
+webmail: https://cloud.schmidbauer.cz/index.php/apps/rainloop/
+
+aliases:
+   - { name: cloud, target: stefan }
+   - { name: hello, target: stefan }
+   - { name: hallo, target: stefan }
+   - { name: ahoj, target: stefan }
+   - { name: puff, target: stefan }
+   - { name: monitoring, target: stefan }
+   - { name: stefan@schmidbauer.cz, target: stefan }
+   - { name: anna@schmidbauer.cz, target: anna }
+   - { name: max@schmidbauer.cz, target: max }
+   - { name: mattias@schmidbauer.cz, target: mattias }
+   - { name: hans@schmidbauer.cz, target: hans }
+   - { name: angelika@schmidbauer.cz, target: angelika }
+   - { name: chiemseewelle@schmidbauer.cz, target: chiemseewelle }
