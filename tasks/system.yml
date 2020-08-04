@@ -1,9 +1,4 @@
 ---
-# template myname
-# template mygate
-# template hosts
-# template login.conf
-
 - name: basic system setup
   hosts: all_hosts
   user: admin

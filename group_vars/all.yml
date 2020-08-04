@@ -3,6 +3,8 @@ fqdn: mail.schmidbauer.cz
 admin_user: puffy
 admin_pass: secret
 
+update: False # patch the system
+
 host_aliases:
   - mail
   - www

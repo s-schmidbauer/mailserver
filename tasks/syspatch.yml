@@ -1,0 +1,24 @@
+- name: install system updates
+  hosts: all_hosts
+  user: admin
+  become: true
+  become_method: doas
+
+  tasks:
+    - name: install system updates
+      shell: syspatch
+      register: system_update_results
+      when: update==True
+      tags: syspatch
+
+    - name: install package updates
+      shell: pkg_add -u
+      register: package_update_results
+      when: update==True
+      tags: syspatch
+
+    - name: install extra packages
+      openbsd_pkg: name={{ item }} state=present
+      with_items: "{{ extra_packages }}"
+      register: extra_packages_result
+      tags: syspatch
