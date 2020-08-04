@@ -9,6 +9,8 @@ host_aliases:
 
 ipv4: 193.235.207.51
 ipv6: 2a03:f80:420:193:235:207:51:1
+ipv4_gw: 193.235.207.1
+ipv6_gw: 2a03:f80:420::1
 
 webmail: https://cloud.schmidbauer.cz/index.php/apps/rainloop/
 
