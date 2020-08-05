@@ -1,4 +1,23 @@
 ---
-# setup let's encrypt
-# setup httpd
-# try creating cert and reloading httpd
+- name: Configure ACME
+  hosts: all_hosts
+  user: admin
+  become: true
+  become_method: doas
+
+  tasks:
+  - name: "System - Configure /etc/acme-client.conf"
+    template:
+      src: "acme-client.conf"
+      dest: "/etc/acme-client.conf"
+    tags: acme
+
+  - name: "System - Generate TLS certificate"
+    shell: "acme-client {{ fqdn }}"
+    tags: acme
+    ignore_errors: True
+
+  - name: "System - Generate OCSP file"
+    shell: "ocspcheck -No /etc/ssl/{{ fqdn }}.der /etc/ssl/{{ fqdn }}.fullchain.pem"
+    tags: acme
+    ignore_errors: True
