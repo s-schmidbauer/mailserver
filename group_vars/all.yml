@@ -3,7 +3,15 @@ fqdn: mail.schmidbauer.cz
 mail_domain: schmidbauer.cz
 
 admins:
-  - { name: puffy, pass: secret, key: "{{ lookup('file', '~/.ssh/id_ecdsa.pub') }}" }
+  - { name: puffy, pass: $2b$abcdef , key: "{{ lookup('file', '~/.ssh/id_ecdsa.pub') }}" }
+
+users:
+  - { name: stefan,         pass: $2b$abcdef }
+  - { name: hans,           pass: $2b$abcdef }
+  - { name: angelika,       pass: $2b$abcdef }
+  - { name: max,            pass: $2b$abcdef }
+  - { name: mattias,        pass: $2b$abcdef }
+  - { name: chiemseewelle,  pass: $2b$abcdef }
 
 update: False # patch the system
 extra_packages: None

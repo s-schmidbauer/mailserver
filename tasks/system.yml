@@ -22,15 +22,28 @@
       - sysctl.conf
     tags: sys
 
-  - name: System - Create admin user with password
-    shell: pass=$(echo {{ item.pass }} | encrypt) ; adduser -batch {{ item.user }} wheel 'admin' $pass
+  - name: System - Create admin users with password
+    shell: pass=$(echo {{ item.pass ) ; adduser -batch {{ item.user }} wheel 'admin' $pass
     ignore_errors: true
     no_log: true
     with_items: admins
     tags: sys
 
-  - name: System - Set admin user password
-    shell: pass=$(echo {{ item.pass }} | encrypt) ; usermod -p $pass {{ item.user }}
+  - name: System - Set admin users password
+    shell: pass=$(echo {{ item.pass }} ) ; usermod -p $pass {{ item.user }}
+    no_log: true
+    with_items: admins
+    tags: sys
+
+  - name: System - Create mail users with password
+    shell: pass=$(echo {{ item.pass }} ) ; adduser -batch {{ item.user }} $pass
+    ignore_errors: true
+    no_log: true
+    with_items: users
+    tags: sys
+
+  - name: System - Set mail users password
+    shell: pass=$(echo {{ item.pass }} ) ; usermod -p $pass {{ item.user }}
     no_log: true
     with_items: admins
     tags: sys

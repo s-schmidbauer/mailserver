@@ -1,8 +1,6 @@
-puffy:--
-stefan:--
-anna:--
-max:--
-mattias:--
-hans:--
-angelika:--
-chiemseewelle:--
+{% for admin in admins %}
+{{ admin[name]:admin[pass] }}
+{% endfor %}
+{% for user in users %}
+{{ user[name]:user[pass] }}
+{% endfor %}
