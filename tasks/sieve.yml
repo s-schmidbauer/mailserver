@@ -1,10 +1,46 @@
 ---
+- name: Configure Sieve
+  hosts: all_hosts
+  user: admin
+  become: true
+  become_method: doas
 
-# configure sieve like below
-# mkdir /usr/local/lib/dovecot/sieve
-# template sieve scripts
+  tasks:
+    - name: Sieve - Make sure ldns-utils is installed
+      openbsd_pkg:
+        name: ldns-utils
+        state: present
+      tags: sieve
 
-# sievec report-ham.sieve
-# sievec report-spam.sieve
-# chmod 755 sa-learn-ham.sh
-# chmod 755 sa-learn-spam.sh
+    - name: Sieve - Create folder for DKIM key
+      file:
+        path: "{{ sieve_folder }}"
+        state: directory
+        mode: '0755'
+      tags: sieve
+
+    - name: "Sieve - Template {{ item }}"
+      template:
+        src: "sieve/{{ item  }}"
+        dest: "{{ sieve_folder }}/{{ item }}"
+      with_items:
+        - report-ham.sieve
+        - report-spam.sieve
+      tags: sieve
+
+    - name: Sieve - Compile sieve report scripts
+      shell: "sievec {{ sieve_folder }}/{{ item }}"
+      with_items:
+        - report-ham.sieve
+        - report-spam.sieve
+      tags: sieve
+
+    - name: Sieve - Set permissions on sieve learn scripts
+      file:
+        path: "{{ sieve_folder }}/{{ item }}"
+        state: present
+        mode: '0755'
+      with_items:
+        - sa-learn-ham.sh
+        - sa-learn-spam.sh
+      tags: sieve

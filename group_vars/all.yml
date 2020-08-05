@@ -104,3 +104,5 @@ dkim_version: 1
 dkim_key_algo: rsa
 dkim_key_size: 1024
 dkim_signing_allow_username_mismatch: true
+
+sieve_folder: /usr/local/lib/dovecot/sieve
