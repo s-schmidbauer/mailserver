@@ -4,6 +4,7 @@ admins:
   - { name: puffy, pass: secret, key: "{{ lookup('file', '~/.ssh/id_ecdsa.pub') }}" }
 
 update: False # patch the system
+extra_packages: None
 
 host_aliases:
   - mail

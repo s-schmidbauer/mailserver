@@ -1,17 +1,23 @@
-# configure pf
+---
+- name: configure pf
+  hosts: all_hosts
+  user: admin
+  become: true
+  become_method: doas
+
   tasks:
-  - name: "pf - configure /etc/pf.conf"
+  - name: "PF - configure /etc/pf.conf"
     template:
       src: "system/pf.conf"
       dest: "/etc/pf.conf"
     tags: pf
 
-  - name: pf - check conf
+  - name: PF - check config
     shell: pfctl -nf /etc/pf.conf
     register: pf_result
     tags: pf
 
-  - name: pf - activate pf
+  - name: PF - activate pf config
     shell: pfctl -f /etc/pf.conf
     when: pf_result|succeeded
     tags: pf
