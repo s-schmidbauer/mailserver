@@ -1,0 +1,36 @@
+---
+- name: configure ssh
+  hosts: all_hosts
+  user: admin
+  become: true
+  become_method: doas
+
+  tasks:
+  - name: ssh - start
+    service: name=sshd state=started
+    tags: ssh
+
+  - name: ssh - enable ssh
+    shell: rcctl enable sshd
+    tags: ssh
+
+  - name: ssh - set authorized key ( {{ item.value.name }} )
+    authorized_key:
+      user: {{ item.value.name }}
+      state: present
+      key: "{{ item.value.key }}"
+    with_items: admins
+    tags: ssh
+
+  - name: "configure /etc/ssh/sshd_config"
+    template:
+      src: "system/ssh/sshd_config"
+      dest: "/etc/ssh/sshd_config"
+      validate: "/usr/sbin/sshd -T -f %s"
+    register: ssh_config_results
+    tags: ssh
+
+  - name: ssh - reload sshd
+    service: name=sshd state=reloaded
+    when: ssh_config_results|changed
+    tags: ssh

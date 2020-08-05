@@ -1,0 +1,9 @@
+PermitRootLogin {{ ssh_permit_root_login }}
+MaxAuthTries {{ ssh_max_auth_retries }}
+AuthorizedKeysFile	.ssh/authorized_keys
+PasswordAuthentication {{ ssh_permit_password_auth }}
+ChallengeResponseAuthentication {{ ssh_permit_challenge_response_auth }}
+Subsystem	sftp /usr/libexec/sftp-server
+KexAlgorithms {{ ssh_kex_algos }}
+Ciphers {{ ssh_ciphers }}
+MACs {{ ssh_macs }}

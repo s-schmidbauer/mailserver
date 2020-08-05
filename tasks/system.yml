@@ -20,18 +20,20 @@
       - installurl
       - profile
       - sysctl.conf
-    tags: sys-config
+    tags: sys
 
   - name: create admin user with password
-    shell: pass=$(echo {{ admin_pass }} | encrypt) ; adduser -batch {{ admin_user }} wheel 'admin' $pass
+    shell: pass=$(echo {{ admins.value.pass }} | encrypt) ; adduser -batch {{ admins.value.user }} wheel 'admin' $pass
     ignore_errors: true
     no_log: true
-    tags: sys-config
+    with_items: admins
+    tags: sys
 
   - name: set admin user password
-    shell: pass=$(echo {{ admin_pass}} | encrypt) ; usermod -p $pass {{ admin_user }}
+    shell: pass=$(echo {{ admins.value.pass }} | encrypt) ; usermod -p $pass {{ admins.value.user }}
     no_log: true
-    tags: sys-config
+    with_items: admins
+    tags: sys
 
   - name: configure cronjobs
     cron:
@@ -39,4 +41,4 @@
       special_time: "{{ item.special_time }}"
       job: "{{ item.job }}"
     with_items: cronjobs
-    tags: sys-config
+    tags: sys
