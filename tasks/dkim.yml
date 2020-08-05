@@ -1,12 +1,48 @@
 ---
-## install ldns-utils
+- name: configure dkim
+  hosts: all_hosts
+  user: admin
+  become: true
+  become_method: doas
 
-## mkdir /etc/mail/dkim
-## openssl genrsa -out /etc/mail/dkim/hypno.cat.key 1024
-## openssl rsa -in /etc/mail/dkim/hypno.cat.key -pubout -out /etc/mail/dkim/hypno.cat.pub
+  tasks:
+    - name: Make sure ldns-utils is installed
+      openbsd_pkg:
+        name: ldns-utils
+        state: present
 
-# get datestamp
-# generate dkim record with datestamp as selector and pub key
+    - name: Create folder for DKIM key
+      file:
+        path: /etc/mail/dkim
+        state: directory
+        mode: '0755'
+
+    - name: Create folder for DKIM key
+      file:
+        path: /etc/mail/dkim
+        state: directory
+        mode: '0755'
+
+    - name: Create DKIM key
+      openssh_keypair:
+        path: /etc/mail/dkim/{{ fqdn }}.key
+        size: {{ dkim_keysize }}
+
+    - name: Set permissions for DKIM key
+      file:
+        path: /etc/mail/dkim
+        state: directory
+        owner: root
+        grpup: _rspamd
+        mode: '0640'
+
+    - name: Create DKIM record
+      set_fact:
+         timestamp: "{{ lookup('pipe','date +%d%m%Y%H%M') }}"
+         dkim_pubkey: "{{ lookup('pipe','sed -n \'2,4p\' < /etc/mail/dkim/{{ fqdn }}.key | tr -d \'\n\') }}"
+         dkim_record_name: "{{ timestamp }}._domainkey"
+         dkim_record_value: "v=DKIM{{ dkim_version }}; k={{ dkim_key_algo }}; p={{ dkim_pubkey }};"
+
 # mail dkim record to admin
 
 

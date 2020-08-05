@@ -12,7 +12,9 @@
       tags: syspatch
 
     - name: install package updates
-      shell: pkg_add -u
+      openbsd_pkg:
+        name: '*'
+        state: latest
       register: package_update_results
       when: update==True
       tags: syspatch

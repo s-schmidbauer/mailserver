@@ -89,3 +89,7 @@ aliases:
    - { name: hans@schmidbauer.cz, target: hans }
    - { name: angelika@schmidbauer.cz, target: angelika }
    - { name: chiemseewelle@schmidbauer.cz, target: chiemseewelle }
+
+dkim_version: 1
+dkim_key_algo: rsa
+dkim_key_size: 1024
