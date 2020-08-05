@@ -6,27 +6,19 @@
   become_method: doas
 
   tasks:
-  - name: "smtpd - Template {{ item }}"
-    template:
-      src: "smtpd/{{ item }}"
-      dest: "/etc/mail/{{ item }}"
-    with_items:
-      - aliases
-      - creds
-      - domains
-      - smtpd.conf
-    tags: smtpd
+    - name: "smtpd - Template {{ item }}"
+      template:
+        src: "smtpd/{{ item }}"
+        dest: "/etc/mail/{{ item }}"
+      with_items:
+        - aliases
+        - creds
+        - domains
+        - smtpd.conf
+      tags: smtpd
 
-  - name: "smtpd - make aliases"
-    shell: newaliases
-    tags: smtpd
+    - name: "smtpd - make aliases"
+      shell: newaliases
+      tags: smtpd
 
-
-
-# template and make aliases
-
-# template and make creds
-
-# template config file
-
-# (re)start smtpd
+# (re)start smtpd and enable it

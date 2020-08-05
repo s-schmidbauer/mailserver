@@ -6,18 +6,18 @@
   become_method: doas
 
   tasks:
-  - name: "ACME - Configure /etc/acme-client.conf"
-    template:
-      src: "acme-client.conf"
-      dest: "/etc/acme-client.conf"
-    tags: acme
+    - name: "ACME - Configure /etc/acme-client.conf"
+      template:
+        src: "acme-client.conf"
+        dest: "/etc/acme-client.conf"
+      tags: acme
 
-  - name: "ACME - Generate TLS certificate"
-    shell: "acme-client {{ fqdn }}"
-    tags: acme
-    ignore_errors: True
+    - name: "ACME - Generate TLS certificate"
+      shell: "acme-client {{ fqdn }}"
+      tags: acme
+      ignore_errors: True
 
-  - name: "ACME - Generate OCSP file"
-    shell: "ocspcheck -No /etc/ssl/{{ fqdn }}.der /etc/ssl/{{ fqdn }}.fullchain.pem"
-    tags: acme
-    ignore_errors: True
+    - name: "ACME - Generate OCSP file"
+      shell: "ocspcheck -No /etc/ssl/{{ fqdn }}.der /etc/ssl/{{ fqdn }}.fullchain.pem"
+      tags: acme
+      ignore_errors: True

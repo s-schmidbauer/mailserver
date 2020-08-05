@@ -6,18 +6,18 @@
   become_method: doas
 
   tasks:
-  - name: "PF - configure /etc/pf.conf"
-    template:
-      src: "system/pf.conf"
-      dest: "/etc/pf.conf"
-    tags: pf
+    - name: "PF - configure /etc/pf.conf"
+      template:
+        src: "system/pf.conf"
+        dest: "/etc/pf.conf"
+      tags: pf
 
-  - name: PF - check config
-    shell: pfctl -nf /etc/pf.conf
-    register: pf_result
-    tags: pf
+    - name: PF - check config
+      shell: pfctl -nf /etc/pf.conf
+      register: pf_result
+      tags: pf
 
-  - name: PF - activate pf config
-    shell: pfctl -f /etc/pf.conf
-    when: pf_result|succeeded
-    tags: pf
+    - name: PF - activate pf config
+      shell: pfctl -f /etc/pf.conf
+      when: pf_result|succeeded
+      tags: pf

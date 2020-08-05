@@ -6,52 +6,52 @@
   become_method: doas
 
   tasks:
-  - name: "System - Configure /etc/{{ item }}"
-    template:
-      src: "system/{{ item }}"
-      dest: "/etc/{{ item }}"
-    with_items:
-      - doas.conf
-      - myname
-      - mygate
-      - hosts
-      - adduser.conf
-      - login.conf
-      - installurl
-      - profile
-      - sysctl.conf
-    tags: sys
+    - name: "System - Configure /etc/{{ item }}"
+      template:
+        src: "system/{{ item }}"
+        dest: "/etc/{{ item }}"
+      with_items:
+        - doas.conf
+        - myname
+        - mygate
+        - hosts
+        - adduser.conf
+        - login.conf
+        - installurl
+        - profile
+        - sysctl.conf
+      tags: sys
 
-  - name: System - Create admin users with password
-    shell: pass=$(echo {{ item.pass ) ; adduser -batch {{ item.user }} wheel 'admin' $pass
-    ignore_errors: true
-    no_log: true
-    with_items: admins
-    tags: sys
+    - name: System - Create admin users with password
+      shell: pass=$(echo {{ item.pass ) ; adduser -batch {{ item.user }} wheel 'admin' $pass
+      ignore_errors: true
+      no_log: true
+      with_items: admins
+      tags: sys
 
-  - name: System - Set admin users password
-    shell: pass=$(echo {{ item.pass }} ) ; usermod -p $pass {{ item.user }}
-    no_log: true
-    with_items: admins
-    tags: sys
+    - name: System - Set admin users password
+      shell: pass=$(echo {{ item.pass }} ) ; usermod -p $pass {{ item.user }}
+      no_log: true
+      with_items: admins
+      tags: sys
 
-  - name: System - Create mail users with password
-    shell: pass=$(echo {{ item.pass }} ) ; adduser -batch {{ item.user }} $pass
-    ignore_errors: true
-    no_log: true
-    with_items: users
-    tags: sys
+    - name: System - Create mail users with password
+      shell: pass=$(echo {{ item.pass }} ) ; adduser -batch {{ item.user }} $pass
+      ignore_errors: true
+      no_log: true
+      with_items: users
+      tags: sys
 
-  - name: System - Set mail users password
-    shell: pass=$(echo {{ item.pass }} ) ; usermod -p $pass {{ item.user }}
-    no_log: true
-    with_items: admins
-    tags: sys
+    - name: System - Set mail users password
+      shell: pass=$(echo {{ item.pass }} ) ; usermod -p $pass {{ item.user }}
+      no_log: true
+      with_items: admins
+      tags: sys
 
-  - name: System - Configure cronjobs
-    cron:
-      name: "{{ item.name }}"
-      special_time: "{{ item.special_time }}"
-      job: "{{ item.job }}"
-    with_items: cronjobs
-    tags: sys
+    - name: System - Configure cronjobs
+      cron:
+        name: "{{ item.name }}"
+        special_time: "{{ item.special_time }}"
+        job: "{{ item.job }}"
+      with_items: cronjobs
+      tags: sys

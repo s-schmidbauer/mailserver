@@ -6,31 +6,31 @@
   become_method: doas
 
   tasks:
-  - name: SSH - start
-    service: name=sshd state=started
-    tags: ssh
+    - name: SSH - start
+      service: name=sshd state=started
+      tags: ssh
 
-  - name: SSH - enable ssh
-    shell: rcctl enable sshd
-    tags: ssh
+    - name: SSH - enable ssh
+      shell: rcctl enable sshd
+      tags: ssh
 
-  - name: "SSH - set authorized keys for admin {{ item.value.name }}"
-    authorized_key:
-      user: {{ item.name }}
-      state: present
-      key: "{{ item.key }}"
-    with_items: admins
-    tags: ssh
+    - name: "SSH - set authorized keys for admin {{ item.value.name }}"
+      authorized_key:
+        user: {{ item.name }}
+        state: present
+        key: "{{ item.key }}"
+      with_items: admins
+      tags: ssh
 
-  - name: "SSH - configure and validate /etc/ssh/sshd_config"
-    template:
-      src: "system/ssh/sshd_config"
-      dest: "/etc/ssh/sshd_config"
-      validate: "/usr/sbin/sshd -T -f %s"
-    register: ssh_config_results
-    tags: ssh
+    - name: "SSH - configure and validate /etc/ssh/sshd_config"
+      template:
+        src: "system/ssh/sshd_config"
+        dest: "/etc/ssh/sshd_config"
+        validate: "/usr/sbin/sshd -T -f %s"
+      register: ssh_config_results
+      tags: ssh
 
-  - name: SSH - reload sshd
-    service: name=sshd state=reloaded
-    when: ssh_config_results|changed
-    tags: ssh
+    - name: SSH - reload sshd
+      service: name=sshd state=reloaded
+      when: ssh_config_results|changed
+      tags: ssh
