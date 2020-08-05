@@ -1,11 +1,6 @@
 fqdn: mail.schmidbauer.cz
 
 mail_domain: schmidbauer.cz
-smtpd_domains:
-  - schmidbauer.cz
-  - cloud.schmidbauer.cz
-  - mail.schmidbauer.cz
-  - man.schmidbauer.cz
 
 admins:
   - { name: puffy, pass: secret, key: "{{ lookup('file', '~/.ssh/id_ecdsa.pub') }}" }
@@ -84,7 +79,13 @@ cronjobs:
    - { name: "refresh certs with acme-client", special_time: weekly, job: "acme-client {{ fqdn }} && rcctl reload httpd"  }
    - { name: "refresh ocsp with ocspcheck", special_time: daily, job: "ocspcheck -vN -o /etc/ssl/{{ fqdn }}.der /etc/ssl/{{ fqdn }}.fullchain.pem"  }
 
-aliases:
+smtpd_domains:
+  - schmidbauer.cz
+  - cloud.schmidbauer.cz
+  - mail.schmidbauer.cz
+  - man.schmidbauer.cz
+
+smtp_aliases:
    - { name: cloud, target: stefan }
    - { name: hello, target: stefan }
    - { name: hallo, target: stefan }

@@ -13,7 +13,7 @@
 MAILER-DAEMON: postmaster
 postmaster: root
 
-{% for alias in aliases %}
+{% for alias in smtp_aliases %}
 {{ alias[name]: alias[target] }}
 {% endfor %}
 

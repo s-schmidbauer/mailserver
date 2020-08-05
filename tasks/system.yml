@@ -23,14 +23,14 @@
     tags: sys
 
   - name: System - Create admin user with password
-    shell: pass=$(echo {{ admins.value.pass }} | encrypt) ; adduser -batch {{ admins.value.user }} wheel 'admin' $pass
+    shell: pass=$(echo {{ item.pass }} | encrypt) ; adduser -batch {{ item.user }} wheel 'admin' $pass
     ignore_errors: true
     no_log: true
     with_items: admins
     tags: sys
 
   - name: System - Set admin user password
-    shell: pass=$(echo {{ admins.value.pass }} | encrypt) ; usermod -p $pass {{ admins.value.user }}
+    shell: pass=$(echo {{ item.pass }} | encrypt) ; usermod -p $pass {{ item.user }}
     no_log: true
     with_items: admins
     tags: sys

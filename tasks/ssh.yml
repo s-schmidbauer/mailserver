@@ -16,9 +16,9 @@
 
   - name: SSH - set authorized key ( {{ item.value.name }} )
     authorized_key:
-      user: {{ item.value.name }}
+      user: {{ item.name }}
       state: present
-      key: "{{ item.value.key }}"
+      key: "{{ item.key }}"
     with_items: admins
     tags: ssh
 
