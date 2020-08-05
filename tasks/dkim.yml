@@ -1,5 +1,5 @@
 ---
-- name: configure dkim
+- name: Configure DKIM
   hosts: all_hosts
   user: admin
   become: true
@@ -57,8 +57,3 @@
 
 
 # mail dkim record to admin
-
-
-# mkdir /etc/rspamd/local.d
-# template dkim_signing.conf
-# copy dkim key

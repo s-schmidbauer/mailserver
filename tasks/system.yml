@@ -1,5 +1,5 @@
 ---
-- name: basic system setup
+- name: Basic system setup
   hosts: all_hosts
   user: admin
   become: true

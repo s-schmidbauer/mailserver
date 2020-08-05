@@ -1,5 +1,5 @@
 ---
-- name: configure ssh
+- name: Configure SSH
   hosts: all_hosts
   user: admin
   become: true
