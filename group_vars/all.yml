@@ -87,6 +87,11 @@ cronjobs:
    - { name: "refresh certs with acme-client", special_time: weekly, job: "acme-client {{ fqdn }} && rcctl reload httpd"  }
    - { name: "refresh ocsp with ocspcheck", special_time: daily, job: "ocspcheck -vN -o /etc/ssl/{{ fqdn }}.der /etc/ssl/{{ fqdn }}.fullchain.pem"  }
 
+mail_max_size: 50M # used in smtpd.conf and dovecot
+smtpd_max_deferred: 1000
+smtpd_queue_ttl: 4d
+smtpd_warn_interval: 1h, 6h, 2d
+
 smtpd_domains:
   - schmidbauer.cz
   - cloud.schmidbauer.cz
@@ -107,6 +112,20 @@ smtp_aliases:
    - { name: hans@schmidbauer.cz, target: hans }
    - { name: angelika@schmidbauer.cz, target: angelika }
    - { name: chiemseewelle@schmidbauer.cz, target: chiemseewelle }
+
+smtp_filters:
+   - { name: check_dyndns, command: phase connect match rdns regex { '.*\.dyn\..*', '.*\.dsl\..*', '.*\.glas\..*' } junk }
+   - { name: check_rdns, command: phase connect match !rdns junk }
+   - { name: check_fcrdns, command: phase connect match !fcrdns junk }
+   - { name: senderscore, command: proc-exec "filter-senderscore -blockBelow 10 -junkBelow 70 -slowFactor 5000" }
+   - { name: rspamd, command: proc-exec "filter-rspamd" }
+
+smtp_used_filters:
+   - check_dyndns
+   - check_rdns
+   - check_fcrdns
+   - senderscore
+   - rspamd
 
 dkim_key_folder: /etc/mail/dkim
 dkim_version: 1

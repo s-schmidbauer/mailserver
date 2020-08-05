@@ -21,10 +21,6 @@
     shell: newaliases
     tags: smtpd
 
-  - name: "smtpd - make creds"
-    shell: newaliases
-    tags: smtpd
-
 
 
 # template and make aliases
