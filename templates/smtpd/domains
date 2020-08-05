@@ -1,4 +1,1 @@
-schmidbauer.cz
-cloud.schmidbauer.cz
-mail.schmidbauer.cz
-man.schmidbauer.cz
+{{ smtpd_domains }}

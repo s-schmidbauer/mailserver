@@ -1,5 +1,12 @@
 fqdn: mail.schmidbauer.cz
 
+mail_domain: schmidbauer.cz
+smtpd_domains:
+  - schmidbauer.cz
+  - cloud.schmidbauer.cz
+  - mail.schmidbauer.cz
+  - man.schmidbauer.cz
+
 admins:
   - { name: puffy, pass: secret, key: "{{ lookup('file', '~/.ssh/id_ecdsa.pub') }}" }
 
@@ -91,6 +98,8 @@ aliases:
    - { name: angelika@schmidbauer.cz, target: angelika }
    - { name: chiemseewelle@schmidbauer.cz, target: chiemseewelle }
 
+dkim_key_folder: /etc/mail/dkim
 dkim_version: 1
 dkim_key_algo: rsa
 dkim_key_size: 1024
+dkim_signing_allow_username_mismatch: true
