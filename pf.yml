@@ -10,6 +10,7 @@
       template:
         src: "system/pf.conf"
         dest: "/etc/pf.conf"
+      register: pf_config
       tags: pf
 
     - name: PF - check config
@@ -19,5 +20,5 @@
 
     - name: PF - activate pf config
       shell: pfctl -f /etc/pf.conf
-      when: pf_result|succeeded
+      when: pf_result is succeeded and pf_config is changed
       tags: pf
