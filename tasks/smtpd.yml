@@ -16,9 +16,24 @@
         - domains
         - smtpd.conf
       tags: smtpd
+      register: smtpd_templates
+      tags: smtpd
 
-    - name: "smtpd - make aliases"
+    - name: "smtpd - Make aliases"
       shell: newaliases
       tags: smtpd
 
-# (re)start smtpd and enable it
+    - name: smtpd - Restart smtpd when changed
+      service:
+        name: smtpd
+        state: restarted
+        enabled: yes
+      when: smtpd_templates|changed
+      tags: smtpd
+
+    - name: smtpd - Start smtpd
+      service:
+        name: smtpd
+        state: started
+        enabled: yes
+      tags: smtpd

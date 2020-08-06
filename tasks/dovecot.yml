@@ -1,4 +1,55 @@
 ---
+- name: Configure Dovecot
+  hosts: all_hosts
+  user: admin
+  become: true
+  become_method: doas
+
+  tasks:
+    - name: "Dovecot - Template {{ item }}"
+      template:
+        src: "dovecot/{{ item }}"
+        dest: "/etc/dovecot/conf.d/{{ item }}"
+      with_items:
+        - 10-auth.conf
+        - 10-mail.conf
+        - 10-master.conf
+        - 10-ssl.conf
+        - 10-imap.conf
+        - 10-managesieve.conf
+        - 10-plugin.conf
+        - passwd.masterusers
+      tags: dovecot
+      register: dovecot_templates
+      tags: dovecot
+
+    - name: "Dovecot - Template ACL"
+      template:
+        src: "dovecot/dovecot.acl"
+        dest: "/etc/dovecot/dovecot.acl"
+      tags: dovecot
+      register: dovecot_templates
+      tags: dovecot
+
+    - name: "Dovecot - Make aliases"
+      shell: newaliases
+      tags: dovecot
+
+    - name: Dovecot - Restart dovecot when changed
+      service:
+        name: smtpd
+        state: restarted
+        enabled: yes
+      when: dovecot_templates|changed
+      tags: dovecot
+
+    - name: Dovecot - Start dovecot
+      service:
+        name: dovecot
+        state: started
+        enabled: yes
+      tags: dovecot
+
 
 # template all config files
 # install dovecot

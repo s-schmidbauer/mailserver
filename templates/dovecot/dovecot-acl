@@ -1,9 +1,7 @@
-INBOX user=stefan lrstwip
-Sent user=stefan lrstwip
-Drafts user=stefan lrstwip
-Trash user=stefan lrsi
-INBOX.Trash user=stefan lrsi
-Junk user=stefan lrsip
-Archive.* user=stefan lrsti
-Servers user=stefan lrsti
+INBOX user=owner lrstwip
+Sent user=owner lrstwip
+Drafts user=owner lrstwip
+Trash user=owner lrsi
+INBOX.Trash user=owner lrsi
+Junk user=owner lrsip
 * user=mailadmin lr
