@@ -7,6 +7,7 @@ admins:
 
 users:
   - { name: stefan,         pass: $2b$abcdef }
+  - { name: anna,         pass: $2b$abcdef }
   - { name: hans,           pass: $2b$abcdef }
   - { name: angelika,       pass: $2b$abcdef }
   - { name: max,            pass: $2b$abcdef }
@@ -46,7 +47,7 @@ pf_trusted_hosts:
 pf_trusted_hosts_ports:
   - 22
 
-tls_ciphers: EECDH+AESGCM:EDH+AESGCM # httpd and dovecot
+tls_ciphers: EECDH+AESGCM:EDH+AESGCM # httpd, smtpd, dovecot
 tls_ecdhe: P-384,P-256,X25519 # httpd
 tls_min_version: TLSv1.2 # dovecot
 
@@ -64,21 +65,14 @@ ssh_macs: hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-e
 
 httpd_use_tls: False # Only set to true once the certificate is actually generated!
 httpd_use_lets_encrypt: True
-httpd_enforce_tls: True
+httpd_enforce_tls: True # Except for Let's Encrypt that  is
 httpd_redirect_default_vhost: True
 httpd_redirect_default_vhost_destination: https://cloud.schmidbauer.cz/index.php/apps/rainloop/
 
 sysctl:
-  - { name: "kern.shminfo.shmmax, value: 134217728" }         # max size of shared memory segment (bytes)
-  - { name: "kern.shminfo.shmall, value: 524288" }            # total amount of sharedmemory available (pages)
-  - { name: "kern.shminfo.shmmni, value: 240" }               # max number of sharedmemory segments system-wide
-  - { name: "kern.seminfo.semmns, value: 360" }               # max number of semaphores system-wide (zabbix relevant)
   - { name: "net.inet.ip.forwarding, value: 1" }
   - { name: "net.inet6.ip6.forwarding, value: 1" }
   - { name: "net.inet6.ip6.redirect, value: 1" }
-  - { name: "net.inet.esp.enable, value: 1" }
-  - { name: "net.inet.ah.enable, value: 0" }
-  - { name: "net.inet.ipcomp.enable, value: 1" }
   - { name: "ddb.panic, value: 0" }
 
 cronjobs:
@@ -132,6 +126,11 @@ dkim_version: 1
 dkim_key_algo: rsa
 dkim_key_size: 1024
 dkim_signing_allow_username_mismatch: true
+
+dmarc_version: 1
+dmarc_policy: none
+dmarc_percent: 100
+dmarc_rua_contact: hostmaster
 
 dovecot_auth_mechanisms: plain
 dovecot_auth_failure_delay: 5

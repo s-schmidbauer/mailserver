@@ -1,3 +1,13 @@
 ---
-## mail dmarc record to admin
-## _dmarc.hypno.cat.   IN TXT    "v=DMARC1;p=none;pct=100;rua=mailto:postmaster@hypno.cat;"
+- name: Configure DMARC
+  hosts: all_hosts
+  user: admin
+  become: true
+  become_method: doas
+
+  tasks:
+    - name: DMARC - Create DMARC record
+      set_fact:
+         dmarc_record_name: "_dmarc.{{ mail_domain }}."
+         dmarc_record_value: "v=DMARC{{ dmarc_version }};p={{ dmarc_policy }};p={{ dmarc_percent }};rua=mailto:{{ dmarc_rua_contact }}@{{ mail_domain }};"
+      tags: dmarc
