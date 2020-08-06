@@ -1,17 +1,26 @@
 ---
-# configure system
-# create local user accounts and set their passwords
+- name: Configure base system
+  include: "{{ item }}"
+  with_items:
+    - system.yml
+    - syspatch.yml
+    - pf.yml
+    - acme-client.yml
+    - httpd.yml
 
-# configure acme
-# configure httpd
-# get tls certificate
-# configure httpd again
+- name: Configure mail system
+  include: "{{ item }}"
+  with_items:
+    - rspamd.yml
+    - sieve.yml
+    - smtpd.yml
+    - dovecot.yml
 
-# configure rspamd and start it
-# setup dkim key
-# configure smtpd and start it
-# encrypt user system passwords for smtpd and put it in creds
-# configure sieve for dovecot
-# configure dovecot and start it
-
-# mail instructions for rdns, dkim, spf, dmarc and tlsa records to admin
+- name: Collect mail information
+  include: "{{ item }}"
+  with_items:
+    - rdns.yml
+    - spf.yml
+    - dkim.yml
+    - dmarc.yml
+    - tlsa.yml
