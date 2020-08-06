@@ -130,7 +130,7 @@ dkim_signing_allow_username_mismatch: true
 dmarc_version: 1
 dmarc_policy: none
 dmarc_percent: 100
-dmarc_rua_contact: hostmaster
+dmarc_rua_contact: "hostmaster@{{ mail_domain}}"
 
 dovecot_auth_mechanisms: plain
 dovecot_auth_failure_delay: 5
