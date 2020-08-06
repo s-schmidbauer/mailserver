@@ -1,4 +1,4 @@
-fqdn: mail.schmidbauer.cz
+fqdn: mail2.schmidbauer.cz
 
 mail_domain: schmidbauer.cz
 
@@ -7,22 +7,13 @@ admins:
 
 users:
   - { name: stefan,         pass: $2b$abcdef }
-  - { name: anna,         pass: $2b$abcdef }
-  - { name: hans,           pass: $2b$abcdef }
-  - { name: angelika,       pass: $2b$abcdef }
-  - { name: max,            pass: $2b$abcdef }
-  - { name: mattias,        pass: $2b$abcdef }
-  - { name: chiemseewelle,  pass: $2b$abcdef }
 
 update: False # patch the system
 extra_packages: None
 
 host_aliases:
-  - mail
-  - www
-  - www.schmidbauer.cz
-  - stream
-  - stream.schmidbauer.cz
+  - www2.schmidbauer.cz
+  - stream2.schmidbauer.cz
 
 ipv4: 193.235.207.51
 ipv6: 2a03:f80:420:193:235:207:51:1
@@ -130,7 +121,7 @@ dkim_signing_allow_username_mismatch: true
 dmarc_version: 1
 dmarc_policy: none
 dmarc_percent: 100
-dmarc_rua_contact: "hostmaster@{{ mail_domain}}"
+dmarc_rua_contact: "hostmaster@{{ mail_domain }}"
 
 dovecot_auth_mechanisms: plain
 dovecot_auth_failure_delay: 5
