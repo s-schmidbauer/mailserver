@@ -1,2 +1,2 @@
-{{ ipv4 }} {{ fqdn }} {{ hostname_aliases|join(' ') or '' }}
-{{ ipv6 }} {{ fqdn }} {{ hostname_aliases|join(' ') or '' }}
+{{ ipv4 }} {{ fqdn }} {{ host_aliases|join(' ') or '' }}
+{{ ipv6 }} {{ fqdn }} {{ host_aliases|join(' ') or '' }}

@@ -14,7 +14,7 @@ MAILER-DAEMON: postmaster
 postmaster: root
 
 {% for alias in smtp_aliases %}
-{{ alias[name] }}:{{ alias[target] }}
+{{ alias.name }}:{{ alias.target }}
 {% endfor %}
 
 # General redirections for important pseudo accounts
