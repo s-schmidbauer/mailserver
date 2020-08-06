@@ -1,0 +1,27 @@
+---
+- name: Configure base system
+  import_playbook: system.yml
+#
+#
+#     - system.yml
+#     - syspatch.yml
+#     - pf.yml
+#     - acme-client.yml
+#     - httpd.yml
+#
+# - name: Configure mail system
+#   include: "{{ item }}"
+#   with_items:
+#     - rspamd.yml
+#     - sieve.yml
+#     - smtpd.yml
+#     - dovecot.yml
+#
+# - name: Collect mail information
+#   include: "{{ item }}"
+#   with_items:
+#     - rdns.yml
+#     - spf.yml
+#     - dkim.yml
+#     - dmarc.yml
+#     - tlsa.yml

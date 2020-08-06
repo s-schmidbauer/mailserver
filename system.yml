@@ -1,14 +1,14 @@
 ---
 - name: Basic system setup
   hosts: all_hosts
-  user: admin
+  user: root
   become: true
   become_method: doas
 
   tasks:
     - name: "System - Configure /etc/{{ item }}"
       template:
-        src: "system/{{ item }}"
+        src: "templates/system/{{ item }}"
         dest: "/etc/{{ item }}"
       with_items:
         - doas.conf
@@ -23,27 +23,27 @@
       tags: sys
 
     - name: System - Create admin users with password
-      shell: pass=$(echo {{ item.pass ) ; adduser -batch {{ item.user }} wheel 'admin' $pass
+      shell: "pass=$(echo {{ item.pass }} ) ; adduser -batch {{ item.user }} wheel 'admin' $pass"
       ignore_errors: true
       no_log: true
       with_items: admins
       tags: sys
 
     - name: System - Set admin users password
-      shell: pass=$(echo {{ item.pass }} ) ; usermod -p $pass {{ item.user }}
+      shell: "pass=$(echo {{ item.pass }} ) ; usermod -p $pass {{ item.user }}"
       no_log: true
       with_items: admins
       tags: sys
 
     - name: System - Create mail users with password
-      shell: pass=$(echo {{ item.pass }} ) ; adduser -batch {{ item.user }} $pass
+      shell: "pass=$(echo {{ item.pass }} ) ; adduser -batch {{ item.user }} $pass"
       ignore_errors: true
       no_log: true
       with_items: users
       tags: sys
 
     - name: System - Set mail users password
-      shell: pass=$(echo {{ item.pass }} ) ; usermod -p $pass {{ item.user }}
+      shell: "pass=$(echo {{ item.pass }} ) ; usermod -p $pass {{ item.user }}"
       no_log: true
       with_items: admins
       tags: sys

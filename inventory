@@ -1,0 +1,5 @@
+[mail2.schmidbauer.cz]
+199.247.23.59 ansible_python_interpreter=/usr/local/bin/python3 ansible_port=22 ansible_user=root ansible_ssh_pass=R4[ua(V(SoJr111r
+
+[all_hosts]
+199.247.23.59 ansible_python_interpreter=/usr/local/bin/python3 ansible_port=22 ansible_user=root ansible_ssh_pass=R4[ua(V(SoJr111r
