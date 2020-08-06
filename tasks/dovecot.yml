@@ -6,6 +6,15 @@
   become_method: doas
 
   tasks:
+    - name: Dovecot - Install packages
+      openbsd_pkg:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - dovecot
+        - dovecot-pigeonhole
+      tags: dovecot
+
     - name: "Dovecot - Template {{ item }}"
       template:
         src: "dovecot/{{ item }}"
@@ -37,7 +46,7 @@
 
     - name: Dovecot - Restart dovecot when changed
       service:
-        name: smtpd
+        name: dovecot
         state: restarted
         enabled: yes
       when: dovecot_templates|changed
@@ -49,8 +58,3 @@
         state: started
         enabled: yes
       tags: dovecot
-
-
-# template all config files
-# install dovecot
-# install dovecot-pigeonhole
