@@ -33,5 +33,5 @@
     - name: SSH - reload sshd
       service: name=sshd
         state: reloaded
-      when: ssh_config_results|changed
+      when: ssh_config_results is changed
       tags: ssh

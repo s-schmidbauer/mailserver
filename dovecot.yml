@@ -50,7 +50,7 @@
         name: dovecot
         state: restarted
         enabled: yes
-      when: dovecot_templates|changed
+      when: dovecot_templates is changed
       tags: dovecot
 
     - name: Dovecot - Start dovecot

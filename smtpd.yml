@@ -28,7 +28,7 @@
         name: smtpd
         state: restarted
         enabled: yes
-      when: smtpd_templates|changed
+      when: smtpd_templates is changed
       tags: smtpd
 
     - name: smtpd - Start smtpd
