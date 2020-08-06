@@ -135,7 +135,15 @@ dkim_signing_allow_username_mismatch: true
 
 dovecot_auth_mechanisms: plain
 dovecot_auth_failure_delay: 5
+dovecot_first_valid_uid: 1000
 dovecot_mail_location: maildir:~/Maildir
+dovecot_mail_folders:
+   - { name: Drafts, special_use: Drafts }
+   - { name: Sent, special_use: Sent }
+   - { name: Trash, special_use: Trash }
+   - { name: Junk, special_use: Junk }
+   - { name: Archive, special_use: Archive }
+
 dovecot_masteruser: mailadmin
 dovecot_masteruser_pass: {CRYPT}$2y$05$S40YgQ8ffbcWyy1es.nn1ei9Esoqs561o7Ih3Yzbs0X9ipN1gmxTq
 dovecot_imap_plugins:

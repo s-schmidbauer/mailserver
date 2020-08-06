@@ -1,6 +1,6 @@
 {% for admin in admins %}
-{{ admin[name]:admin[pass] }}
+{{ admin[name] }}:{{ admin[pass] }}
 {% endfor %}
 {% for user in users %}
-{{ user[name]:user[pass] }}
+{{ user[name] }}:{{  user[pass] }}
 {% endfor %}
