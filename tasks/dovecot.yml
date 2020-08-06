@@ -24,9 +24,10 @@
         - 10-mail.conf
         - 10-master.conf
         - 10-ssl.conf
-        - 10-imap.conf
-        - 10-managesieve.conf
-        - 10-plugin.conf
+        - 20-imap.conf
+        - 20-managesieve.conf
+        - 90-plugin.conf
+        - 90-quota.conf
         - passwd.masterusers
       tags: dovecot
       register: dovecot_templates

@@ -87,7 +87,7 @@ cronjobs:
    - { name: "refresh certs with acme-client", special_time: weekly, job: "acme-client {{ fqdn }} && rcctl reload httpd"  }
    - { name: "refresh ocsp with ocspcheck", special_time: daily, job: "ocspcheck -vN -o /etc/ssl/{{ fqdn }}.der /etc/ssl/{{ fqdn }}.fullchain.pem"  }
 
-mail_max_size: 50M # used in smtpd.conf and dovecot
+mail_max_size: 50M # used in smtpd and dovecot
 smtpd_max_deferred: 1000
 smtpd_queue_ttl: 4d
 smtpd_warn_interval: 1h, 6h, 2d
