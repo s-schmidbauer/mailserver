@@ -35,8 +35,8 @@
 
     - name: "Dovecot - Template ACL"
       template:
-        src: "dovecot/dovecot.acl"
-        dest: "/etc/dovecot/dovecot.acl"
+        src: "dovecot/dovecot-acl"
+        dest: "/etc/dovecot/dovecot-acl"
       tags: dovecot
       register: dovecot_templates
       tags: dovecot

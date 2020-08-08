@@ -15,9 +15,27 @@
     - name: "ACME - Generate TLS certificate"
       shell: "acme-client {{ fqdn }}"
       tags: acme
+      register: acme_result
+      failed_when: acme_result.rc == 1 or acme_result.rc >= 2
       ignore_errors: True
 
-    - name: "ACME - Generate OCSP file"
+    - name: "ACME - Generate OCSP files"
       shell: "ocspcheck -No /etc/ssl/{{ fqdn }}.der /etc/ssl/{{ fqdn }}.fullchain.pem"
       tags: acme
+      when: acme_result.rc == 0 or acme_result.rc == 2
+      ignore_errors: True
+
+    - name: "ACME - Generate alias TLS certificate"
+      command: "acme-client {{ item }}"
+      with_items: "{{ host_aliases }}"
+      tags: acme
+      register: acme_result_aliases
+      failed_when: acme_result_aliases.rc == 1 or acme_result_aliases.rc >= 2
+      ignore_errors: True
+
+    - name: "ACME - Generate alias OCSP files"
+      command: "ocspcheck -No /etc/ssl/{{ item }}.der /etc/ssl/{{ item }}.fullchain.pem"
+      with_items: "{{ host_aliases }}"
+      tags: acme
+      # when: acme_result_aliases.rc == 0 or acme_result_aliases.rc == 2
       ignore_errors: True
