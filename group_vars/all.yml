@@ -2,14 +2,8 @@ fqdn: mail2.schmidbauer.cz
 
 mail_domain: schmidbauer.cz
 
-admins:
-  - { name: puffy, pass: $2b$abcdef , key: "{{ lookup('file', '~/.ssh/id_ecdsa.pub') }}" }
-
-users:
-  - { name: stefan,         pass: $2b$abcdef }
-
 update: False # patch the system
-extra_packages: None
+# extra_packages:
 
 host_aliases:
   - www2.schmidbauer.cz
@@ -25,7 +19,8 @@ net_speed: 125M # 1 Gbit
 net_speed_cap: 100M
 
 pf_max_src_conn: 50
-pf_max_src_conn_rate: 15/5
+pf_max_src_conn_rate: 25/5
+pf_max_src_high_conn_rate: 50/5
 
 pf_all_hosts_ports:
   - 80
@@ -34,9 +29,11 @@ pf_all_hosts_ports:
 pf_trusted_hosts:
   - localhost
   - 194.228.20.201
+  - 194.228.20.188
 
 pf_trusted_hosts_ports:
   - 22
+  - 5666
 
 tls_ciphers: EECDH+AESGCM:EDH+AESGCM # httpd, smtpd, dovecot
 tls_ecdhe: P-384,P-256,X25519 # httpd
@@ -44,7 +41,7 @@ tls_min_version: TLSv1.2 # dovecot
 
 doas_groups_nopass:
   - wheel
-doas_groups: None
+# doas_groups: None
 
 ssh_max_auth_retries: 3
 ssh_permit_password_auth: No
@@ -54,23 +51,23 @@ ssh_kex_algos: curve25519-sha256@libssh.org,ecdh-sha2-nistp521,ecdh-sha2-nistp38
 ssh_ciphers: chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
 ssh_macs: hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com
 
-httpd_use_tls: False # Only set to true once the certificate is actually generated!
-httpd_use_lets_encrypt: True
-httpd_enforce_tls: True # Except for Let's Encrypt that  is
-httpd_redirect_default_vhost: True
+httpd_use_tls: false # Only set to true once the certificate is actually generated!
+httpd_use_lets_encrypt: true
+httpd_enforce_tls: true # Except for Let's Encrypt that  is
+httpd_redirect_default_vhost: true
 httpd_redirect_default_vhost_destination: https://cloud.schmidbauer.cz/index.php/apps/rainloop/
 
 sysctl:
-  - { name: "net.inet.ip.forwarding, value: 1" }
-  - { name: "net.inet6.ip6.forwarding, value: 1" }
-  - { name: "net.inet6.ip6.redirect, value: 1" }
-  - { name: "ddb.panic, value: 0" }
+  - { name: "net.inet.ip.forwarding",   value: 1 }
+  - { name: "net.inet6.ip6.forwarding", value: 1 }
+  - { name: "net.inet6.ip6.redirect",   value: 1 }
+  - { name: "ddb.panic",                value: 0 }
 
 cronjobs:
-   - { name: "install system patches", special_time: weekly, job: "syspatch"  }
-   - { name: "install package updates", special_time: weekly, job: "pkg_add -u"  }
-   - { name: "refresh certs with acme-client", special_time: weekly, job: "acme-client {{ fqdn }} && rcctl reload httpd"  }
-   - { name: "refresh ocsp with ocspcheck", special_time: daily, job: "ocspcheck -vN -o /etc/ssl/{{ fqdn }}.der /etc/ssl/{{ fqdn }}.fullchain.pem"  }
+   - { name: "install system patches",          special_time: "weekly",   job: "syspatch"  }
+   - { name: "install package updates",         special_time: "weekly",   job: "pkg_add -u"  }
+   - { name: "refresh certs with acme-client",  special_time: "weekly",   job: "acme-client {{ fqdn }} && rcctl reload httpd"  }
+   - { name: "refresh ocsp with ocspcheck",     special_time: "daily",    job: "ocspcheck -vN -o /etc/ssl/{{ fqdn }}.der /etc/ssl/{{ fqdn }}.fullchain.pem"  }
 
 mail_max_size: 50M # used in smtpd and dovecot
 smtpd_max_deferred: 1000
@@ -84,29 +81,29 @@ smtpd_domains:
   - man.schmidbauer.cz
 
 smtp_aliases:
-   - { name: cloud, target: stefan }
-   - { name: hello, target: stefan }
-   - { name: hallo, target: stefan }
-   - { name: ahoj, target: stefan }
-   - { name: puff, target: stefan }
-   - { name: monitoring, target: stefan }
-   - { name: stefan@schmidbauer.cz, target: stefan }
-   - { name: anna@schmidbauer.cz, target: anna }
-   - { name: max@schmidbauer.cz, target: max }
-   - { name: mattias@schmidbauer.cz, target: mattias }
-   - { name: hans@schmidbauer.cz, target: hans }
-   - { name: angelika@schmidbauer.cz, target: angelika }
-   - { name: chiemseewelle@schmidbauer.cz, target: chiemseewelle }
+   - { name: cloud,                         target: stefan }
+   - { name: hello,                         target: stefan }
+   - { name: hallo,                         target: stefan }
+   - { name: ahoj,                          target: stefan }
+   - { name: puff,                          target: stefan }
+   - { name: monitoring,                    target: stefan }
+   - { name: stefan@schmidbauer.cz,         target: stefan }
+   - { name: anna@schmidbauer.cz,           target: anna }
+   - { name: max@schmidbauer.cz,            target: max }
+   - { name: mattias@schmidbauer.cz,        target: mattias }
+   - { name: hans@schmidbauer.cz,           target: hans }
+   - { name: angelika@schmidbauer.cz,       target: angelika }
+   - { name: chiemseewelle@schmidbauer.cz,  target: chiemseewelle }
 
 smtp_filters:
-   - { name: check_dyndns, command: phase connect match rdns regex { '.*\.dyn\..*', '.*\.dsl\..*', '.*\.glas\..*' } junk }
-   - { name: check_rdns, command: phase connect match !rdns junk }
-   - { name: check_fcrdns, command: phase connect match !fcrdns junk }
-   - { name: senderscore, command: proc-exec "filter-senderscore -blockBelow 10 -junkBelow 70 -slowFactor 5000" }
-   - { name: rspamd, command: proc-exec "filter-rspamd" }
+   # - { name: check_dyndns, command: "phase connect match rdns regex { '.*\.dyn\..*', '.*\.dsl\..*', '.*\.glas\..*' } junk" }
+   - { name: check_rdns,    command: "phase connect match !rdns junk" }
+   - { name: check_fcrdns,  command: "phase connect match !fcrdns junk" }
+   - { name: senderscore,   command: "proc-exec 'filter-senderscore' -blockBelow 10 -junkBelow 70 -slowFactor 5000" }
+   - { name: rspamd,        command: "proc-exec 'filter-rspamd'" }
 
 smtp_used_filters:
-   - check_dyndns
+   # - check_dyndns
    - check_rdns
    - check_fcrdns
    - senderscore
@@ -135,7 +132,7 @@ dovecot_mail_folders:
    - { name: Archive, special_use: Archive }
 
 dovecot_masteruser: mailadmin
-dovecot_masteruser_pass: {CRYPT}$2y$05$S40YgQ8ffbcWyy1es.nn1ei9Esoqs561o7Ih3Yzbs0X9ipN1gmxTq
+dovecot_masteruser_pass: "{CRYPT}$2y$05$S40YgQ8ffbcWyy1es.nn1ei9Esoqs561o7Ih3Yzbs0X9ipN1gmxTq"
 dovecot_imap_plugins:
   - imap_sieve
   - imap_acl
