@@ -9,6 +9,12 @@ host_aliases:
   - www2.schmidbauer.cz
   - stream2.schmidbauer.cz
 
+admins:
+  - { name: puffy, pass: "$2b$09$rNEtwCuzLuvyIINfE1Z/EOZpusDJ21iI/RQRYOwBkc6cAJcXg7yOK" , key: "{{ lookup('file', '~/.ssh/id_ecdsa.pub') }}" }
+
+users:
+  - { name: stefan, pass: "$2b$09$8dbRJ5mjxoVw1oAqgLR2sujIZKfnuBvZGtwlUJnVIakDsszhzpJgi" }
+
 ipv4: 193.235.207.51
 ipv6: 2a03:f80:420:193:235:207:51:1
 ipv4_gw: 193.235.207.1
@@ -30,6 +36,7 @@ pf_trusted_hosts:
   - localhost
   - 194.228.20.201
   - 194.228.20.188
+  - 92.110.9.54 # hotel rotterdam
 
 pf_trusted_hosts_ports:
   - 22
@@ -44,12 +51,12 @@ doas_groups_nopass:
 # doas_groups: None
 
 ssh_max_auth_retries: 3
-ssh_permit_password_auth: No
-ssh_permit_root_login: No
-ssh_permit_challenge_response_auth: No
-ssh_kex_algos: curve25519-sha256@libssh.org,ecdh-sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group-exchange-sha256
-ssh_ciphers: chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
-ssh_macs: hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com
+ssh_permit_password_auth: "no"
+ssh_permit_root_login: "no"
+ssh_permit_challenge_response_auth: "no"
+ssh_kex_algos: "curve25519-sha256@libssh.org,ecdh-sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group-exchange-sha256"
+ssh_ciphers: "chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr"
+ssh_macs: "hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com"
 
 httpd_use_tls: false # Only set to true once the certificate is actually generated!
 httpd_use_lets_encrypt: true

@@ -23,29 +23,19 @@
       tags: sys
 
     - name: System - Create admin users with password
-      command: pass=$(echo "{{ item.pass }}" ) && adduser -batch "{{ item.user }}" wheel 'admin' $pass
-      ignore_errors: true
-      no_log: false
-      with_items: "{{ admins }}"
-      tags: sys
-
-    - name: System - Set admin users password
-      command: pass=$(echo "{{ item.pass }}" ) && usermod -p $pass "{{ item.user }}"
-      ignore_errors: true
+      user:
+        name: "{{ item.name }}"
+        password: "{{ item.pass }}"
+        groups: wheel
       no_log: false
       with_items: "{{ admins }}"
       tags: sys
 
     - name: System - Create mail users with password
-      command: pass=$(echo "{{ item.pass }}" ) && adduser -batch "{{ item.user }}" $pass
-      ignore_errors: true
-      no_log: false
-      with_items: "{{ users }}"
-      tags: sys
-
-    - name: System - Set mail users password
-      command: pass=$(echo "{{ item.pass }}" ) && usermod -p $pass "{{ item.user }}"
-      ignore_errors: true
+      user:
+        name: "{{ item.name }}"
+        password: "{{ item.pass }}"
+        groups: wheel
       no_log: false
       with_items: "{{ users }}"
       tags: sys
