@@ -1,0 +1,34 @@
+---
+- name: Configure httpd
+  hosts: all_hosts
+  user: admin
+  become: true
+  become_method: doas
+
+  tasks:
+    - name: "httpd - Configure /etc/httpd.conf"
+      template:
+        src: "httpd.conf"
+        dest: "/etc/httpd.conf"
+      register: httpd_config_results
+      tags: httpd
+
+    - name: httpd - Valdidate config
+      shell: "/usr/sbin/httpd -n"
+      register: httpd_validate
+      tags: httpd
+
+    - name: httpd - Start and enable httpd
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+      when: '"OK" in httpd_validate.stdout'
+      tags: httpd
+
+    - name: httpd - Reload httpd
+      service:
+        name: httpd
+        state: reloaded
+      when: '"OK" in httpd_validate.stdout and httpd_config_results is changed'
+      tags: httpd
