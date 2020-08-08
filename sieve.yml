@@ -19,7 +19,7 @@
         mode: '0755'
       tags: sieve
 
-    - name: "Sieve - Template {{ item }}"
+    - name: "Sieve - Template sieve report scripts"
       template:
         src: "sieve/{{ item  }}"
         dest: "{{ sieve_folder }}/{{ item }}"
@@ -35,10 +35,19 @@
         - report-spam.sieve
       tags: sieve
 
+    - name: "Sieve - Template sieve learn scripts"
+      template:
+        src: "sieve/{{ item  }}"
+        dest: "{{ sieve_folder }}/{{ item }}"
+      with_items:
+        - sa-learn-ham.sh
+        - sa-learn-spam.sh
+      tags: sieve
+
     - name: Sieve - Set permissions on sieve learn scripts
       file:
         path: "{{ sieve_folder }}/{{ item }}"
-        state: present
+        state: file
         mode: '0755'
       with_items:
         - sa-learn-ham.sh
