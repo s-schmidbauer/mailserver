@@ -6,6 +6,10 @@
   become_method: doas
 
   tasks:
+    - name: Rspamd - Create timestamp for dkim_singing.conf
+      set_fact:
+         dkim_timestamp: "{{ lookup('pipe','date +%d%m%Y%H%M') }}"
+
     - name: Rspamd - Install packages
       openbsd_pkg:
         name: "{{ item }}"
@@ -15,6 +19,19 @@
         - rspamd
         - opensmtpd-filter-rspamd
         - opensmtpd-filter-senderscore
+      tags: rspamd
+
+    - name: Rspamd - Create folder /etc/rspamd/local.d
+      file:
+        path: /etc/rspamd/local.d
+        state: directory
+        mode: '0755'
+      tags: rspamd
+
+    - name: Rspamd - Template dkim_signing.conf
+      template:
+        src: "dkim_signing.conf"
+        dest: "/etc/rspamd/local.d"
       tags: rspamd
 
 # start rspamd and enable it

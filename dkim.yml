@@ -6,6 +6,10 @@
   become_method: doas
 
   tasks:
+    - name: DKIM - Create timestamp for dkim_singing.conf
+      set_fact:
+         dkim_timestamp: "{{ lookup('pipe','date +%d%m%Y%H%M') }}"
+
     - name: DKIM - Make sure ldns-utils is installed
       openbsd_pkg:
         name: ldns-utils
@@ -19,40 +23,31 @@
         mode: '0755'
       tags: dkim
 
-    - name: DKIM - Create DKIM key
-      openssh_keypair:
+    - name: DKIM - Check if DKIM key exists
+      stat:
         path: "{{ dkim_key_folder }}/{{ fqdn }}.key"
-        size: "{{ dkim_keysize }}"
+      register: dkim_key_exists
+
+    - name: DKIM - Create DKIM key
+      command: ssh-keygen -t {{ dkim_key_algo }} -f "{{ dkim_key_folder }}/{{ fqdn }}.key" -b {{ dkim_key_size }} -q -N ""
       tags: dkim
+      when: not dkim_key_exists.stat.exists
 
     - name: DKIM - Set permissions for DKIM key
       file:
         path: "{{ dkim_key_folder }}"
         state: directory
         owner: root
-        grpup: _rspamd
+        group: _rspamd
         mode: '0640'
       tags: dkim
 
     - name: DKIM - Create DKIM record
       set_fact:
-         dkim_timestamp: "{{ lookup('pipe','date +%d%m%Y%H%M') }}"
-         dkim_pubkey: "{{ lookup('pipe','sed -n \'2,4p\' < /etc/mail/dkim/{{ fqdn }}.key | tr -d \'\n\') }}"
+         dkim_cmd: "sed -n '2,4p' < /etc/mail/dkim/{{ fqdn }}.key | tr -d '\n'"
+         dkim_pubkey: "{{ lookup('pipe', {{ dkim_cmd }} ) }}"
          dkim_record_name: "{{ dkim_timestamp }}._domainkey"
          dkim_record_value: "v=DKIM{{ dkim_version }}; k={{ dkim_key_algo }}; p={{ dkim_pubkey }};"
-      tags: dkim
-
-    - name: DKIM - Create folder /etc/rspamd/local.d
-      file:
-        path: /etc/rspamd/local.d
-        state: directory
-        mode: '0755'
-      tags: dkim
-
-    - name: DKIM - Template dkim_signing.conf
-      template:
-        src: "dkim_signing.conf"
-        dest: "/etc/rspamd/local.d"
       tags: dkim
 
 
