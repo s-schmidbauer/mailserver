@@ -20,7 +20,7 @@
       tags: smtpd
 
     - name: "smtpd - Make aliases"
-      shell: newaliases
+      command: newaliases
       tags: smtpd
 
     - name: smtpd - Restart smtpd when changed
