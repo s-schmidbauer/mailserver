@@ -6,16 +6,16 @@
 #     - system.yml
 #     - syspatch.yml
 #     - pf.yml
-#     - acme-client.yml
 #     - httpd.yml
+#     - acme-client.yml
 #
 # - name: Configure mail system
 #   include: "{{ item }}"
 #   with_items:
 #     - rspamd.yml
-#     - sieve.yml
 #     - smtpd.yml
 #     - dovecot.yml
+#     - sieve.yml
 #
 # - name: Collect mail information
 #   include: "{{ item }}"
