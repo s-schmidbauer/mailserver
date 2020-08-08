@@ -23,29 +23,31 @@
       tags: sys
 
     - name: System - Create admin users with password
-      shell: "pass=$(echo {{ item.pass }} ) ; adduser -batch {{ item.user }} wheel 'admin' $pass"
+      command: pass=$(echo "{{ item.pass }}" ) && adduser -batch "{{ item.user }}" wheel 'admin' $pass
       ignore_errors: true
-      no_log: true
-      with_items: admins
+      no_log: false
+      with_items: "{{ admins }}"
       tags: sys
 
     - name: System - Set admin users password
-      shell: "pass=$(echo {{ item.pass }} ) ; usermod -p $pass {{ item.user }}"
-      no_log: true
-      with_items: admins
+      command: pass=$(echo "{{ item.pass }}" ) && usermod -p $pass "{{ item.user }}"
+      ignore_errors: true
+      no_log: false
+      with_items: "{{ admins }}"
       tags: sys
 
     - name: System - Create mail users with password
-      shell: "pass=$(echo {{ item.pass }} ) ; adduser -batch {{ item.user }} $pass"
+      command: pass=$(echo "{{ item.pass }}" ) && adduser -batch "{{ item.user }}" $pass
       ignore_errors: true
-      no_log: true
-      with_items: users
+      no_log: false
+      with_items: "{{ users }}"
       tags: sys
 
     - name: System - Set mail users password
-      shell: "pass=$(echo {{ item.pass }} ) ; usermod -p $pass {{ item.user }}"
-      no_log: true
-      with_items: admins
+      command: pass=$(echo "{{ item.pass }}" ) && usermod -p $pass "{{ item.user }}"
+      ignore_errors: true
+      no_log: false
+      with_items: "{{ users }}"
       tags: sys
 
     - name: System - Configure cronjobs
@@ -53,5 +55,6 @@
         name: "{{ item.name }}"
         special_time: "{{ item.special_time }}"
         job: "{{ item.job }}"
-      with_items: cronjobs
+      ignore_errors: true
+      with_items: "{{ cronjobs }}"
       tags: sys
