@@ -1,11 +1,12 @@
 fqdn: mail2.schmidbauer.cz
 mail_domain: schmidbauer.cz
+update: true
 
 admins:
-  - { name: puffy, pass: $2b$09$rNEtwCuzLuvyIINfE1Z/EOZpusDJ21iI/RQRYOwBkc6cAJcXg7yOK , key: "{{ lookup('file', '~/.ssh/id_ecdsa.pub') }}" }
+  - { name: puffy, pass: "$2b$09$rNEtwCuzLuvyIINfE1Z/EOZpusDJ21iI/RQRYOwBkc6cAJcXg7yOK" , key: "{{ lookup('file', '~/.ssh/id_ecdsa.pub') }}" }
 
 users:
-  - { name: stefan,         pass: $2b$09$8dbRJ5mjxoVw1oAqgLR2sujIZKfnuBvZGtwlUJnVIakDsszhzpJgi }
+  - { name: stefan, pass: "$2b$09$8dbRJ5mjxoVw1oAqgLR2sujIZKfnuBvZGtwlUJnVIakDsszhzpJgi" }
 
 host_aliases:
   - www2.schmidbauer.cz
@@ -15,3 +16,10 @@ ipv4: 199.247.23.59
 ipv6: 2001:19f0:6c01:6b3:5400:02ff:feeb:91fc
 ipv4_gw: 199.247.22.1
 ipv6_gw: None
+
+
+httpd_use_tls: false # Only set to true once the certificate is actually generated!
+httpd_use_lets_encrypt: true
+httpd_enforce_tls: true # Except for Let's Encrypt that  is
+httpd_redirect_default_vhost: true
+httpd_redirect_default_vhost_destination: https://cloud.schmidbauer.cz/index.php/apps/rainloop/
