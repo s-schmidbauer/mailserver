@@ -53,7 +53,6 @@
       template:
         src: "system/mail_backup.sh"
         dest: "/usr/local/bin/mail_backup.sh"
-        state: present
         owner: root
         group: root
         mode: '0700'
