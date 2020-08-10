@@ -3,7 +3,7 @@
 `Tested with: OpenBSD 6.7`
 
 # Setup
-* Configure a new server running OpenBSD 6.7 (i. e. vultr.com )
+* Configure a new server running OpenBSD 6.7 (i. e. [www.vultr.com](https://www.vultr.com/?ref=7294151) )
 * Setup your DNS for: A, AAAA and reverse records
 * Later, once tested and working fine you can also create an MX records for your domain
 * Make sure the new server is ssh-able
