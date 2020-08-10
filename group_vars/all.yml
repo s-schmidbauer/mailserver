@@ -41,7 +41,7 @@ pf_all_hosts_ports:
   - 443
 
 pf_trusted_hosts:
-  - 194.228.20.3
+  - 194.228.20.0/24
 
 pf_trusted_hosts_ports:
   - 22
