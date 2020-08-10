@@ -32,6 +32,7 @@
       template:
         src: "dkim_signing.conf"
         dest: "/etc/rspamd/local.d"
+      register: rspamd_dkim_config
       tags: rspamd
 
     - name: Rspamd - Valdidate config
@@ -52,8 +53,8 @@
     - name: Rspamd - Reload rspamd
       service:
         name: rspamd
-        state: reload
-      when: '"OK" in rspamd_validate.stdout'
+        state: reloaded
+      when: 'rspamd_dkim_config is changed and "OK" in rspamd_validate.stdout'
       tags: rspamd
 
 

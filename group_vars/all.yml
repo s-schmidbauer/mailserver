@@ -35,9 +35,7 @@ pf_all_hosts_ports:
 
 pf_trusted_hosts:
   - localhost
-  - 194.228.20.201
-  - 194.228.20.188
-  - 92.110.9.54 # hotel rotterdam
+  - 194.228.20.3
 
 pf_trusted_hosts_ports:
   - 22
