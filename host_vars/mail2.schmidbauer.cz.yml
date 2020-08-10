@@ -17,13 +17,8 @@ ipv6: 2001:19f0:6c01:6b3:5400:02ff:feeb:91fc
 ipv4_gw: 199.247.22.1
 ipv6_gw: None
 
-httpd_use_tls: false # Only set to true once the certificate is actually generated!
+httpd_use_tls: true # Only set to true once the certificate is actually generated!
 httpd_use_lets_encrypt: true
-httpd_enforce_tls: true # Except for Let's Encrypt that  is
-httpd_redirect_default_vhost: true
-
-httpd_use_tls: false # Only set to true once the certificate is actually generated!
-httpd_use_lets_encrypt: true
-httpd_enforce_tls: true # Except for Let's Encrypt that  is
+httpd_enforce_tls: true # Except for Let's Encrypt that is
 httpd_redirect_default_vhost: true
 httpd_redirect_default_vhost_destination: https://cloud.schmidbauer.cz/index.php/apps/rainloop/

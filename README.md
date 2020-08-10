@@ -1,19 +1,20 @@
-# ansible role for configuring OpenBSD based mail server
+# OpenBSD based mail server (smtpd, dovecot, rspamd, sieve).
+# Setup using ansible.
 
 `Tested with: OpenBSD 6.7`
 
-# Setup
+For support, contact [www.schmidbauer.cz](www.schmidbauer.cz)
+
+## General Setup
 * Configure a new server running OpenBSD 6.7 (i. e. [www.vultr.com](https://www.vultr.com/?ref=7294151) )
 * Setup your DNS for: A, AAAA and reverse records
 * Later, once tested and working fine you can also create an MX records for your domain
 * Make sure the new server is ssh-able
-* Have ansible >=2.8
-* Configure ansible inventory using: `ansible_user=root ansible_ssh_password=secret`
-* (Or skip that step if your ISP places a pubkey for you  on the server)
+* Have ansible >=2.8 on your laptop
 
 Run playbooks in below order.
 
-# Prep
+## Prep
 * Users, Admins and a `mailadmin` user provide passwords by hash. Hash the passwords you want to use.
 * Admins have ssh keys to connect. They are copied from your workstation.
 * Authorized, trusted IPs can manage and monitor. Add them to `pf_trusted_hosts`
@@ -23,13 +24,12 @@ Run playbooks in below order.
 [mail2.schmidbauer.cz]
 1.2.3.4 ansible_python_interpreter=/usr/local/bin/python3 ansible_port=22 ansible_user=root ansible_ssh_private_key=~/.ssh/id_ecdsa
 ```
+* ..Or create an ansible inventory using: `ansible_user=root ansible_ssh_password=secret`  .. if you need to use root and a password.
 
+## Customize
 Set parameters in a hosts file (like `host_vars/mail.schmidbauer.cz` or set them globally in `group_vars/all.yml`)
 * Configure `mail_domain`.
 * Configure `fqdn` and IP settings of your new server in
-* Specify two list in `all.yml`: `users` and `admins`
-* Set `update: true`
-* Set `httpd_use_tls: false` (needed until Let's Encrypt step is done)
 * Configure Admins and Users along with their password hashes
 
 ## Base
@@ -73,3 +73,8 @@ Run below playbooks in order
 * STARTSSL
 * Login: password
 * User: stefan
+
+## Big shoutouts to
+* The guys working on [OpenBSD](www.openbsd.org)
+* [Gilles Chehade](www.poolp.org) for his amazing work in `smtpd`
+* [horia](https://github.com/vedetta-com) for this amazing efforts with `caesonia` and `vedetta`
