@@ -1,12 +1,12 @@
-ansible role for configuring openbsd based mail server
+# ansible role for configuring openbsd based mail server
 
-tested with: 6.7
+`tested with: 6.7`
 
 # Setup
-Configure all name records with help of scripts
-Configure spf, dmarc, dkim
-Configure inventory: ansible_user=root ansible_ssh_password=secret
-Get root pass and put it in inventory
+* Configure all name records with help of scripts
+* Configure spf, dmarc, dkim
+* Configure inventory: `ansible_user=root ansible_ssh_password=secret`
+* Get root pass and put it in inventory
 
 ## Collect mail information
 * rdns.yml
@@ -36,7 +36,7 @@ Authorized trusted IPs can manage and monitor.
 * acme-client.yml
 * httpd.yml
 
-Configure inventory to no longer use passwords: ansible_user=root ansible_ssh_private_key=~/.ssh/id_ecdsa
+Configure inventory to no longer use passwords: `ansible_user=root ansible_ssh_private_key=~/.ssh/id_ecdsa`
 
 Enable use tls again: `httpd_use_tls: true`
 Set `update: false`
