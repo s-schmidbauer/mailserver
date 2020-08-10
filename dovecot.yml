@@ -31,7 +31,6 @@
         - passwd.masterusers
       tags: dovecot
       register: dovecot_templates
-      tags: dovecot
 
     - name: "Dovecot - Template ACL"
       template:
@@ -39,18 +38,9 @@
         dest: "/etc/dovecot/dovecot-acl"
       tags: dovecot
       register: dovecot_templates
-      tags: dovecot
 
     - name: "Dovecot - Make aliases"
       shell: newaliases
-      tags: dovecot
-
-    - name: Dovecot - Restart dovecot when changed
-      service:
-        name: dovecot
-        state: restarted
-        enabled: yes
-      when: dovecot_templates is changed
       tags: dovecot
 
     - name: Dovecot - Start dovecot
@@ -58,4 +48,17 @@
         name: dovecot
         state: started
         enabled: yes
+      tags: dovecot
+
+    - name: Dovecot - Valdidate config
+      shell: "/usr/local/bin/doveconf -n"
+      register: dovecot_validate
+      tags: dovecot
+
+    - name: Dovecot - Restart dovecot when changed and config valid
+      service:
+        name: dovecot
+        state: restarted
+        enabled: yes
+      when: 'dovecot_templates is changed and "Fatal" not in dovecot_validate.stdout'
       tags: dovecot

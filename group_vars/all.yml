@@ -32,6 +32,7 @@ pf_max_src_high_conn_rate: 50/5
 pf_all_hosts_ports:
   - 80
   - 443
+  - 22
 
 pf_trusted_hosts:
   - localhost
