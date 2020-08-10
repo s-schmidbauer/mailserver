@@ -3,7 +3,7 @@
 
 `Tested with: OpenBSD 6.7`
 
-For support, contact [www.schmidbauer.cz](www.schmidbauer.cz)
+For support, contact [www.schmidbauer.cz](https://www.schmidbauer.cz)
 
 ## General Setup
 * Configure a new server running OpenBSD 6.7 (i. e. [www.vultr.com](https://www.vultr.com/?ref=7294151) )
@@ -75,6 +75,6 @@ Run below playbooks in order
 * User: stefan
 
 ## Big shoutouts to
-* The guys working on [OpenBSD](www.openbsd.org)
-* [Gilles Chehade](www.poolp.org) for his amazing work in `smtpd`
+* The guys working on [OpenBSD](https://www.openbsd.org)
+* [Gilles Chehade](https://www.poolp.org) for his amazing work in `smtpd`
 * [horia](https://github.com/vedetta-com) for this amazing efforts with `caesonia` and `vedetta`
