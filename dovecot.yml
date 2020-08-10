@@ -26,6 +26,7 @@
         - 10-ssl.conf
         - 20-imap.conf
         - 20-managesieve.conf
+        - 90-acl.conf
         - 90-plugin.conf
         - 90-quota.conf
         - passwd.masterusers
