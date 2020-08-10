@@ -1,27 +1,42 @@
 ---
-- name: Configure base system
-  import_playbook: system.yml
-#
-#
-#     - system.yml
-#     - syspatch.yml
-#     - pf.yml
-#     - httpd.yml
-#     - acme-client.yml
-#
-# - name: Configure mail system
-#   include: "{{ item }}"
-#   with_items:
-#     - rspamd.yml
-#     - smtpd.yml
-#     - dovecot.yml
-#     - sieve.yml
-#
-# - name: Collect mail information
-#   include: "{{ item }}"
-#   with_items:
-#     - rdns.yml
-#     - spf.yml
-#     - dkim.yml
-#     - dmarc.yml
-#     - tlsa.yml
+  tasks:
+    - name: Don't use TLS yet
+      set_fact:
+         httpd_use_tls: false
+
+    - name: Configure base system
+      import_playbook: system.yml
+
+    - name: Patch system
+      import_playbook: syspatch.yml
+
+    - name: Configure pf
+      import_playbook: syspatch.yml
+
+    - name: Configure httpd
+      import_playbook: httpd.yml
+
+    - name: Configure acme-client
+      import_playbook: acme-client.yml
+
+    - name: Enable TLS usage now
+      set_fact:
+         httpd_use_tls: true
+
+    - name: Configure httpd again, to use TLS
+      import_playbook: httpd.yml
+
+    - name: Configure rspamd
+      import_playbook: rspamd.yml
+
+    - name: Configure smtpd
+      import_playbook: smtpd.yml
+
+    - name: Configure dovecot
+      import_playbook: dovecot.yml
+
+    - name: Configure sieve
+      import_playbook: sieve.yml
+
+    - name: DNS setup helper
+      import_playbook: dns-setup.yml
