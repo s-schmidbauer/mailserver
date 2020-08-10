@@ -23,14 +23,16 @@
       tags: dns-config
 
     - name: DNS helper - Run script
-      shell: "/usr/local/bin/dns_config.sh"
+      shell: "/usr/local/bin/dns_config.sh > /tmp/dns_config.out"
       register: dns_config
       tags: dns-config
 
-    - name: DNS helper - Mail output
-      mail:
-        to: "{{ dmarc_rua_contact }}"
-        subject: DNS setup for "{{ fqdn }}"
-        body: "{{ dns_config.stdout }} {{ dns_config.stderr }} "
-      delegate_to: localhost
-      tags: dns-config
+    # - name: DNS helper - Mail output to defined contact
+    #   mail:
+    #     to: "{{ dmarc_rua_contact }}"
+    #     subject: DNS setup for "{{ fqdn }}"
+    #     body: "Hello.  Please find attached hints on how to setup DNS for your mailserver."
+    #     attach:
+    #       - /tmp/dns_config.out
+    #   delegate_to: localhost
+    #   tags: dns-config
