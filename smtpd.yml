@@ -17,7 +17,6 @@
         - smtpd.conf
       tags: smtpd
       register: smtpd_templates
-      tags: smtpd
 
     - name: "smtpd - Make aliases"
       command: newaliases
