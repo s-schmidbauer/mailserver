@@ -3,9 +3,10 @@
 `Tested with: OpenBSD 6.7`
 
 # Setup
-* Configure a new server
+* Configure a new server running OpenBSD 6.7 (i. e. vultr.com )
 * Setup your DNS for: A, AAAA and reverse records
 * Later, once tested and working fine you can also create an MX records for your domain
+* Make sure the new server is ssh-able
 * Have ansible >=2.8
 * Configure ansible inventory using: `ansible_user=root ansible_ssh_password=secret`
 * (Or skip that step if your ISP places a pubkey for you  on the server)
@@ -29,32 +30,31 @@ Set parameters in a hosts file (like `host_vars/mail.schmidbauer.cz` or set them
 * Specify two list in `all.yml`: `users` and `admins`
 * Set `update: true`
 * Set `httpd_use_tls: false` (needed until Let's Encrypt step is done)
-
+* Configure Admins and Users along with their password hashes
 
 ## Base
 Run below playbooks in order
-* system.yml
-* syspatch.yml
-* Set `update: false`
-* ssh.yml
-* pf.yml
-* httpd.yml
-* acme-client.yml
-* Enable use TLS again: `httpd_use_tls: true`
-* httpd.yml (yes, again)
+* system.yml ( `ansible-playbook -i inventory system.yml` )
+* syspatch.yml ( `ansible-playbook -i inventory system.yml -e "update=true"`` )
+* ssh.yml ( `ansible-playbook -i inventory ssh.yml` )
+* pf.yml ( `ansible-playbook -i inventory pf.yml` )
+* httpd.yml ( `ansible-playbook -i inventory httpd.yml -e "httpd_use_tls=false" -e "httpd_use_lets_encrypt=yes"`` )
+* acme-client.yml ( `ansible-playbook -i inventory acme-client.yml` )
+* httpd.yml ( `ansible-playbook -i inventory httpd.yml -e "httpd_use_tls=true" -e "httpd_use_lets_encrypt=yes"` )
 * Configure inventory to no longer use passwords: `ansible_user=puffy ansible_ssh_private_key=~/.ssh/id_ecdsa`
 
 ## Mail
 Run below playbooks in order
-* rspamd.yml
-* smtpd.yml
-* dovecot.yml
-* sieve.yml
+* rspamd.yml ( `ansible-playbook -i inventory rspamd.yml` )
+* smtpd.yml ( `ansible-playbook -i inventory smtpd.yml` )
+* dovecot.yml ( `ansible-playbook -i inventory dovecot.yml` )
+* sieve.yml ( `ansible-playbook -i inventory sieve.yml` )
 
 # And finally
-* Configure SPF, DMARC, DKIM and more later with help of `dns-setup.yml`
-* It can be tough / annoying / confusing. Don't give up right away
-* Restore a Maildir backup to the local home folder of your user
+* Configure SPF, DMARC, DKIM and more later with help of:
+* `dns-setup.yml` ( `ansible-playbook -i inventory dns-setup.yml` )
+* ..  It can be tough / annoying / confusing. Don't give up.
+* Optionally: Restore a Maildir backup to the local home folder of your user
 
 ## Setup your mail client
 
