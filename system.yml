@@ -48,3 +48,13 @@
       ignore_errors: true
       with_items: "{{ cronjobs }}"
       tags: sys
+
+    - name: System - Template backup maildir script
+      template:
+        src: "system/mail_backup.sh"
+        dest: "/usr/local/bin/mail_backup.sh"
+        state: present
+        owner: root
+        group: root
+        mode: '0700'
+      tags: sys

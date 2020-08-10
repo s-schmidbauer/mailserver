@@ -1,6 +1,6 @@
+#  BASIC SETTINGS
 fqdn: mail2.schmidbauer.cz
 host: mail2
-
 mail_domain: schmidbauer.cz
 
 update: False # patch the system
@@ -16,12 +16,17 @@ admins:
 
 users:
   - { name: stefan, pass: "$2b$09$8dbRJ5mjxoVw1oAqgLR2sujIZKfnuBvZGtwlUJnVIakDsszhzpJgi" }
+  - { name: backupuser, pass: "$2b$08$93HkUiogG6LjOtwywLRooeu4d6xLlsLsZymEZrNfIio0eGkScbEGu" }
 
 ipv4: 193.235.207.51
 ipv6: 2a03:f80:420:193:235:207:51:1
 ipv4_gw: 193.235.207.1
 ipv6_gw: 2a03:f80:420::1
 
+backup_location: /home/backupuser
+delete_backups_older: 6
+
+#  TECHNICAL SETTINGS
 ext_if: vio0
 net_speed: 125M # 1 Gbit
 net_speed_cap: 100M
@@ -71,10 +76,16 @@ sysctl:
   - { name: "ddb.panic",                value: 0 }
 
 cronjobs:
-   - { name: "install system patches",          special_time: "weekly",   job: "syspatch"  }
-   - { name: "install package updates",         special_time: "weekly",   job: "pkg_add -u"  }
-   - { name: "refresh certs with acme-client",  special_time: "weekly",   job: "acme-client {{ fqdn }} && rcctl reload httpd"  }
-   - { name: "refresh ocsp with ocspcheck",     special_time: "daily",    job: "ocspcheck -vN -o /etc/ssl/{{ fqdn }}.der /etc/ssl/{{ fqdn }}.fullchain.pem"  }
+   - { name: "install system patches",                special_time: "weekly",   job: "syspatch"  }
+   - { name: "install package updates",               special_time: "weekly",   job: "pkg_add -u"  }
+   - { name: "refresh mail2 certs with acme-client",  special_time: "weekly",   job: "acme-client {{ fqdn }} && rcctl reload httpd"  }
+   - { name: "refresh www2 certs with acme-client",   special_time: "weekly",   job: "acme-client www2.schmidbauer.cz && rcctl reload httpd"  }
+   - { name: "refresh stream2 certs with acme-client",special_time: "weekly",   job: "acme-client stream2.schmidbauer.cz && rcctl reload httpd"  }
+   - { name: "refresh mail2 ocsp with ocspcheck",     special_time: "daily",    job: "ocspcheck -vN -o /etc/ssl/{{ fqdn }}.der /etc/ssl/{{ fqdn }}.fullchain.pem"  }
+   - { name: "refresh www2 ocsp with ocspcheck",      special_time: "daily",    job: "ocspcheck -vN -o /etc/ssl/www2.schmidbauer.cz.der /etc/ssl/www2.schmidbauer.cz.fullchain.pem"  }
+   - { name: "refresh stream2 ocsp with ocspcheck",   special_time: "daily",    job: "ocspcheck -vN -o /etc/ssl/stream2.schmidbauer.cz.der /etc/ssl/stream2.schmidbauer.cz.fullchain.pem" }
+   - { name: "mail backup",                           special_time: "weekly",   job: "/usr/local/bin/mail_backup.sh"  }
+
 
 mail_max_size: 50M # used in smtpd and dovecot
 smtpd_max_deferred: 1000
