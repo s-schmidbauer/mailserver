@@ -42,13 +42,4 @@
         mode: '0640'
       tags: dkim
 
-    - name: DKIM - Create DKIM record
-      set_fact:
-         dkim_cmd: "sed -n '2,4p' < /etc/mail/dkim/{{ fqdn }}.key | tr -d '\n'"
-         dkim_pubkey: "{{ lookup('pipe', {{ dkim_cmd }} ) }}"
-         dkim_record_name: "{{ dkim_timestamp }}._domainkey"
-         dkim_record_value: "v=DKIM{{ dkim_version }}; k={{ dkim_key_algo }}; p={{ dkim_pubkey }};"
-      tags: dkim
-
-
 # mail dkim record to admin
