@@ -1,0 +1,36 @@
+---
+- name: Helper script to setup DNS
+  hosts: all_hosts
+  user: puffy
+  become: true
+  become_method: doas
+
+  tasks:
+    - name: DNS helper config - Configure /usr/local/bin/dns_config.sh
+      template:
+        src: "system/dns_config.sh"
+        dest: "/usr/local/bin/dns_config.sh"
+      register: httpd_config_results
+      tags: dns-config
+
+    - name: DNS helper - Set permissions for dns_config.sh
+      file:
+        path: /usr/local/bin/dns_config.sh
+        state: file
+        mode: '0755'
+        owner: root
+        group: wheel
+      tags: dns-config
+
+    - name: DNS helper - Run script
+      shell: "/usr/local/bin/dns_config.sh"
+      register: dns_config
+      tags: dns-config
+
+    - name: DNS helper - Mail output
+      mail:
+        to: "{{ dmarc_rua_contact }}"
+        subject: DNS setup for "{{ fqdn }}"
+        body: "{{ dns_config.stdout }} {{ dns_config.stderr }} "
+      delegate_to: localhost
+      tags: dns-config

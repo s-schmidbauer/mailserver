@@ -1,4 +1,5 @@
 fqdn: mail2.schmidbauer.cz
+host: mail2
 
 mail_domain: schmidbauer.cz
 
@@ -106,7 +107,7 @@ smtp_filters:
    # - { name: check_dyndns, command: "phase connect match rdns regex { '.*\.dyn\..*', '.*\.dsl\..*', '.*\.glas\..*' } junk" }
    - { name: check_rdns,    command: "phase connect match !rdns junk" }
    - { name: check_fcrdns,  command: "phase connect match !fcrdns junk" }
-   - { name: senderscore,   command: "proc-exec 'filter-senderscore' -blockBelow 10 -junkBelow 70 -slowFactor 5000" }
+   - { name: senderscore,   command: "proc-exec 'filter-senderscore -blockBelow 10 -junkBelow 70 -slowFactor 5000'" }
    - { name: rspamd,        command: "proc-exec 'filter-rspamd'" }
 
 smtp_used_filters:
@@ -115,17 +116,6 @@ smtp_used_filters:
    - check_fcrdns
    - senderscore
    - rspamd
-
-dkim_key_folder: /etc/mail/dkim
-dkim_version: 1
-dkim_key_algo: rsa
-dkim_key_size: 1024
-dkim_signing_allow_username_mismatch: true
-
-dmarc_version: 1
-dmarc_policy: none
-dmarc_percent: 100
-dmarc_rua_contact: "hostmaster@{{ mail_domain }}"
 
 dovecot_auth_mechanisms: plain
 dovecot_auth_failure_delay: 5
@@ -148,3 +138,20 @@ dovecot_sieve_plugins:
   - sieve_extprograms
 
 sieve_folder: /usr/local/lib/dovecot/sieve
+
+dkim_version: 1
+dkim_key_folder: /etc/mail/dkim
+dkim_key_algo: rsa
+dkim_key_size: 1024
+dkim_signing_allow_username_mismatch: true
+
+dmarc_version: 1
+dmarc_policy: quarantine
+dmarc_percent: 100
+dmarc_rua_contact: "hostmaster@{{ mail_domain }}"
+
+spf_version: 1
+spf_scope: all
+
+tlsa_usage: "3 1 1"
+tlsa_ports: "443 143 25 587 993 465"
