@@ -5,6 +5,7 @@
 # Setup
 * Configure a new server
 * Your DNS for: A, AAAA and reverse records
+* Later, once tested and working fine you can also create an MX records for your domain
 * Configure ansible inventory using: `ansible_user=root ansible_ssh_password=secret`
 * (Or skip that step if your provider places a pubkey for you)
 
@@ -42,4 +43,23 @@ Run below playbooks in order
 
 # And finally
 * Configure SPF, DMARC, DKIM and more later with help of `dns-setup.yml`
+* It can be tough / annoying / confusing. Don't give up right away
 * Restore a Maildir backup to the local home folder of your user
+
+## Setup your mail client
+
+### Incoming:
+* IMAP
+* mail.schmidbauer.cz
+* Port 143
+* STARTSSL
+* Login: password
+* User: stefan
+
+### Outgoing:
+* SMTP
+* mail.schmidbauer.cz
+* Port 587
+* STARTSSL
+* Login: password
+* User: stefan
