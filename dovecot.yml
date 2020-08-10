@@ -29,16 +29,19 @@
         - 90-acl.conf
         - 90-plugin.conf
         - 90-quota.conf
-        - passwd.masterusers
+
       tags: dovecot
       register: dovecot_templates
 
-    - name: "Dovecot - Template ACL"
+    - name: "Dovecot - Template special files"
       template:
-        src: "dovecot/dovecot-acl"
-        dest: "/etc/dovecot/dovecot-acl"
+        src: "dovecot/{{ item }}"
+        dest: "/etc/dovecot/{{ item }}"
+      with_items:
+        - dovecot-acl
+        - passwd.masterusers
       tags: dovecot
-      register: dovecot_templates
+      register: dovecot_specials
 
     - name: "Dovecot - Make aliases"
       shell: newaliases
@@ -61,5 +64,5 @@
         name: dovecot
         state: restarted
         enabled: yes
-      when: 'dovecot_templates is changed and "Fatal" not in dovecot_validate.stdout'
+      when: 'dovecot_templates is changed or dovecot_specials is changed and "Fatal" not in dovecot_validate.stdout'
       tags: dovecot
