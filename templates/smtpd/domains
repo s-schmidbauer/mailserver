@@ -1,1 +1,3 @@
-{{ smtpd_domains }}
+{% for domain in smtpd_domains %}
+{{ domain }}
+{% endfor %}
