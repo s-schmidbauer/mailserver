@@ -31,16 +31,15 @@ pf_max_src_conn_rate: 25/5
 pf_max_src_high_conn_rate: 50/5
 
 pf_all_hosts_ports:
-  - http
-  - https
-  - ssh
+  - 22
+  - 80
+  - 443
 
 pf_trusted_hosts:
-  - localhost
   - 194.228.20.3
 
 pf_trusted_hosts_ports:
-  - ssh
+  - 22
   - 5666
 
 tls_ciphers: EECDH+AESGCM:EDH+AESGCM # httpd, smtpd, dovecot

@@ -1,7 +1,7 @@
 ---
 - name: Configure Dovecot
   hosts: all_hosts
-  user: admin
+  user: {{ admins[0] }}
   become: true
   become_method: doas
 

@@ -1,6 +1,6 @@
 - name: Configure mailserver
   hosts: all_hosts
-  user: admin
+  user: puffy
   become: true
   become_method: doas
 
@@ -10,38 +10,38 @@
          httpd_use_tls: false
 
     - name: Configure base system
-      import_playbook: system.yml
+      import_tasks: system.yml
 
     - name: Patch system
-      import_playbook: syspatch.yml
+      import_tasks: syspatch.yml
 
     - name: Configure pf
-      import_playbook: syspatch.yml
+      import_tasks: pf.yml
 
     - name: Configure httpd
-      import_playbook: httpd.yml
+      import_tasks: httpd.yml
 
     - name: Configure acme-client
-      import_playbook: acme-client.yml
+      import_tasks: acme-client.yml
 
     - name: Enable TLS usage now
       set_fact:
          httpd_use_tls: true
 
     - name: Configure httpd again, to use TLS
-      import_playbook: httpd.yml
+      import_tasks: httpd.yml
 
     - name: Configure rspamd
-      import_playbook: rspamd.yml
+      import_tasks: rspamd.yml
 
     - name: Configure smtpd
-      import_playbook: smtpd.yml
+      import_tasks: smtpd.yml
 
     - name: Configure dovecot
-      import_playbook: dovecot.yml
+      import_tasks: dovecot.yml
 
     - name: Configure sieve
-      import_playbook: sieve.yml
+      import_tasks: sieve.yml
 
     - name: DNS setup helper
-      import_playbook: dns-setup.yml
+      import_tasks: dns-setup.yml

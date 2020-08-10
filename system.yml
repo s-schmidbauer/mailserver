@@ -1,7 +1,7 @@
 ---
 - name: Basic system setup
   hosts: all_hosts
-  user: root
+  user: puffy
   become: true
   become_method: doas
 

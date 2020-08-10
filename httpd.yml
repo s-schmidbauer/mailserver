@@ -1,7 +1,7 @@
 ---
 - name: Configure httpd
   hosts: all_hosts
-  user: admin
+  user: puffy
   become: true
   become_method: doas
 
