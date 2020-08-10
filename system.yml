@@ -54,6 +54,6 @@
         src: "system/mail_backup.sh"
         dest: "/usr/local/bin/mail_backup.sh"
         owner: root
-        group: root
+        group: wheel
         mode: '0700'
       tags: sys

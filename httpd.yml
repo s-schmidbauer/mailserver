@@ -23,7 +23,7 @@
         name: httpd
         state: started
         enabled: yes
-      when: '"OK" in httpd_validate.stdout'
+      # when: '"OK" in httpd_validate.stdout'
       tags: httpd
 
     - name: httpd - Reload httpd
