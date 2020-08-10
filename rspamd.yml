@@ -34,4 +34,27 @@
         dest: "/etc/rspamd/local.d"
       tags: rspamd
 
+    - name: Rspamd - Valdidate config
+      shell: "/usr/local/bin/rspamadm configtest"
+      register: rspamd_validate
+      tags: rspamd
+
+    - name: Rspamd - Start and enable rspamd services
+      service:
+        name: rspamd
+        state: started
+        enabled: yes
+      with_items:
+        - redis
+        - rspamd
+      tags: rspamd
+
+    - name: Rspamd - Reload rspamd
+      service:
+        name: rspamd
+        state: reload
+      when: '"OK" in rspamd_validate.stdout'
+      tags: rspamd
+
+
 # start rspamd and enable it
