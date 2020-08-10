@@ -138,7 +138,7 @@ dovecot_mail_folders:
    - { name: Junk, special_use: Junk }
    - { name: Archive, special_use: Archive }
 
-dovecot_use_global_acl: false
+dovecot_use_global_acl: true
 dovecot_acl_cache_secs: 300
 dovecot_masteruser: mailadmin
 dovecot_masteruser_pass: "{CRYPT}$2y$05$S40YgQ8ffbcWyy1es.nn1ei9Esoqs561o7Ih3Yzbs0X9ipN1gmxTq"
@@ -148,7 +148,6 @@ dovecot_imap_plugins:
 dovecot_sieve_plugins:
   - sieve_imapsieve
   - sieve_extprograms
-
 
 sieve_folder: /usr/local/lib/dovecot/sieve
 
