@@ -12,10 +12,18 @@ host_aliases:
   - www2.schmidbauer.cz
   - stream2.schmidbauer.cz
 
-ipv4: 199.247.23.59
-ipv6: 2001:19f0:6c01:6b3:5400:02ff:feeb:91fc
-ipv4_gw: 199.247.22.1
-ipv6_gw: None
+ipv4_autoconf: true
+ipv6_autoconf: true
+
+# ipv4:
+#   addr: 193.235.207.51
+#   netmask: 255.255.255.0
+#   gw: 193.235.207.1
+#
+# ipv6:
+#   addr: 2001:19f0:6c01:6b3:5400:02ff:feeb:91fc
+#   netmask: /64
+#   gw: 
 
 httpd_use_tls: true # Only set to true once the certificate is actually generated!
 httpd_use_lets_encrypt: true

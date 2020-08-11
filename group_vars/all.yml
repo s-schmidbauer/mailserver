@@ -27,9 +27,9 @@ ipv6_autoconf: true
 #   gw: 193.235.207.1
 #
 # ipv6:
-#   addr: 2a03:f80:420:193:235:207:51:1
-#   netmask:
-#   gw: 2a03:f80:420::1
+#   addr: 2001:19f0:6c01:6b3:5400:02ff:feeb:91fc
+#   netmask: /64
+#   gw: 
 
 backup_location: /home/backupuser
 delete_backups_older: 6
