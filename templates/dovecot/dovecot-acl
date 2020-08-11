@@ -1,7 +1,7 @@
-INBOX user=owner lrstwip
-Sent user=owner lrstwip
-Drafts user=owner lrstwip
-Trash user=owner lrsi
-INBOX.Trash user=owner lrsi
-Junk user=owner lrsip
-* user=mailadmin lr
+INBOX user=owner {{ dovecot_acl_default_perms }}
+{% if dovecot_mail_folders %}
+{% for folder in dovecot_mail_folders %}
+{{ folder.name }} user=owner {{ folder.perms }}
+{% endfor %}
+{% endif %}
+* user={{ dovecot_masteruser }} {{ dovecot_masteruser_perms }}
