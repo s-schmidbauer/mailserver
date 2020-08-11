@@ -6,7 +6,7 @@
   become_method: doas
 
   tasks:
-    - name: "System - Configure /etc/{{ item }}"
+    - name: "System - Configure templates"
       template:
         src: "templates/system/{{ item }}"
         dest: "/etc/{{ item }}"
@@ -20,6 +20,18 @@
         - installurl
         - profile
         - sysctl.conf
+      tags: sys
+
+    - name: "System - Configure network"
+      template:
+        src: "templates/system/hostname.if"
+        dest: "/etc/hostname.{{ ext_if }}"
+      register: config_network
+      tags: sys
+
+    - name: System - Restart NIC
+      shell: sh /etc/netstart {{ ext_if }}
+      when: config_network is changed
       tags: sys
 
     - name: System - Create admin users with password
