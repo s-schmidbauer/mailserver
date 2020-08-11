@@ -1,2 +1,6 @@
-{{ ipv4_gw or '' }}
-{{ ipv6_gw or '' }}
+{% if ipv4_autoconf == false %}
+{{ ip4.gw }}
+{% endif %}
+{% if ipv6_autoconf == false %}
+{{ ip6.gw }}
+{% endif %}
