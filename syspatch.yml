@@ -9,7 +9,6 @@
     - name: Syspatch - install system updates
       shell: syspatch
       register: system_update_results
-      # when: update|bool == true BROKEN
       tags: syspatch
 
     - name: Syspatch - install package updates
@@ -17,7 +16,6 @@
         name: '*'
         state: latest
       register: package_update_results
-      # when: update|bool == true BROKEN
       tags: syspatch
 
     - name: Syspatch - install extra packages

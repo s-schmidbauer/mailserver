@@ -14,7 +14,6 @@
         - doas.conf
         - myname
         - mygate
-        - hosts
         - adduser.conf
         - login.conf
         - installurl
@@ -32,6 +31,29 @@
     - name: System - Restart NIC
       shell: sh /etc/netstart {{ ext_if }}
       when: config_network is changed
+      tags: sys
+
+    - name: System - Get ifconfig for IPv4
+      shell: ifconfig {{ ext_if }} | grep 'inet ' | cut -d ' ' -f 2
+      register: ipv4_result
+      tags: sys
+
+    - name: System - Get ifconfig for IPv6
+      shell: ifconfig {{ ext_if }} | grep 'inet6 ' | cut -d ' ' -f 2 | cut -d '%' -f 1
+      register: ipv6_result
+      tags: sys
+
+    - name: "System - Set IP facts"
+      set_fact:
+        ipv4: "{{ ipv4_result.stdout }}"
+        ipv6: "{{ ipv6_result.stdout }}"
+
+    - name: "System - Configure templates"
+      template:
+        src: "templates/system/{{ item }}"
+        dest: "/etc/{{ item }}"
+      with_items:
+        - hosts
       tags: sys
 
     - name: System - Create admin users with password
