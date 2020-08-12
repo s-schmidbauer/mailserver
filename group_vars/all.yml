@@ -22,12 +22,12 @@ ipv4_autoconf: true
 ipv6_autoconf: true
 
 # ipv4:
-#   addr: 193.235.207.51
+#   addr: 1.2.3.4
 #   netmask: 255.255.255.0
-#   gw: 193.235.207.1
+#   gw: 1.2.3.1
 #
 # ipv6:
-#   addr: 2001:19f0:6c01:6b3:5400:02ff:feeb:91fc
+#   addr: 2001:abcd:abcd:abcd::
 #   netmask: /64
 #   gw:
 
@@ -87,8 +87,7 @@ cronjobs:
    - { name: "install system patches",      special_time: "weekly",   job: "syspatch"  }
    - { name: "install package updates",     special_time: "weekly",   job: "pkg_add -u"  }
    - { name: "mail backup",                 special_time: "weekly",   job: "/usr/local/bin/mail_backup.sh"  }
-   - { name: "delete older mail backups",   special_timm: "daily"     job: "find {{ backup_location }} -mtime +14 -type d -maxdepth 1 -name 'maildir-*' -delete"
-
+   - { name: "delete older mail backups",   special_time: "daily",    job: "find {{ backup_location }} -mtime +14 -type d -maxdepth 1 -name 'maildir-*' -delete" }
 
 mail_max_size: 50M # used in smtpd and dovecot
 smtpd_max_deferred: 1000
