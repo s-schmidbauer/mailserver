@@ -29,7 +29,7 @@ ipv6_autoconf: true
 # ipv6:
 #   addr: 2001:19f0:6c01:6b3:5400:02ff:feeb:91fc
 #   netmask: /64
-#   gw: 
+#   gw:
 
 backup_location: /home/backupuser
 delete_backups_older: 6
@@ -84,15 +84,10 @@ sysctl:
   - { name: "ddb.panic",                value: 0 }
 
 cronjobs:
-   - { name: "install system patches",                special_time: "weekly",   job: "syspatch"  }
-   - { name: "install package updates",               special_time: "weekly",   job: "pkg_add -u"  }
-   - { name: "refresh mail2 certs with acme-client",  special_time: "weekly",   job: "acme-client {{ fqdn }} && rcctl reload httpd"  }
-   - { name: "refresh www2 certs with acme-client",   special_time: "weekly",   job: "acme-client www2.schmidbauer.cz && rcctl reload httpd"  }
-   - { name: "refresh stream2 certs with acme-client",special_time: "weekly",   job: "acme-client stream2.schmidbauer.cz && rcctl reload httpd"  }
-   - { name: "refresh mail2 ocsp with ocspcheck",     special_time: "daily",    job: "ocspcheck -vN -o /etc/ssl/{{ fqdn }}.der /etc/ssl/{{ fqdn }}.fullchain.pem"  }
-   - { name: "refresh www2 ocsp with ocspcheck",      special_time: "daily",    job: "ocspcheck -vN -o /etc/ssl/www2.schmidbauer.cz.der /etc/ssl/www2.schmidbauer.cz.fullchain.pem"  }
-   - { name: "refresh stream2 ocsp with ocspcheck",   special_time: "daily",    job: "ocspcheck -vN -o /etc/ssl/stream2.schmidbauer.cz.der /etc/ssl/stream2.schmidbauer.cz.fullchain.pem" }
-   - { name: "mail backup",                           special_time: "weekly",   job: "/usr/local/bin/mail_backup.sh"  }
+   - { name: "install system patches",      special_time: "weekly",   job: "syspatch"  }
+   - { name: "install package updates",     special_time: "weekly",   job: "pkg_add -u"  }
+   - { name: "mail backup",                 special_time: "weekly",   job: "/usr/local/bin/mail_backup.sh"  }
+   - { name: "delete older mail backups",   special_timm: "daily"     job: "find {{ backup_location }} -mtime +14 -type d -maxdepth 1 -name 'maildir-*' -delete"
 
 
 mail_max_size: 50M # used in smtpd and dovecot

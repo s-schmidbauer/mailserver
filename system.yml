@@ -19,6 +19,7 @@
         - installurl
         - profile
         - sysctl.conf
+        - crontab.txt
       tags: sys
 
     - name: "System - Configure network"
@@ -74,13 +75,9 @@
       with_items: "{{ users }}"
       tags: sys
 
-    - name: System - Configure cronjobs
-      cron:
-        name: "{{ item.name }}"
-        special_time: "{{ item.special_time }}"
-        job: "{{ item.job }}"
-      ignore_errors: true
-      with_items: "{{ cronjobs }}"
+    - name: System - Install crontab from file
+      shell: cat /etc/crontab.txt | crontab -
+      register: crontab-file
       tags: sys
 
     - name: System - Template backup maildir script
