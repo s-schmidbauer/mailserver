@@ -149,7 +149,7 @@ dovecot_masteruser_perms: lr
 
 dovecot_imap_plugins:
   - imap_sieve
-  - imap_acl
+  # - imap_acl # had issues with login when activated
 dovecot_sieve_plugins:
   - sieve_imapsieve
   - sieve_extprograms
