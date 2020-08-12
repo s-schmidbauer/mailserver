@@ -29,18 +29,20 @@ Run playbooks in below order.
 ## Customize
 Set parameters in a hosts file (like `host_vars/mail.schmidbauer.cz` or set them globally in `group_vars/all.yml`)
 * Configure `mail_domain`.
-* Configure `fqdn` and IP settings of your new server in
-* Configure Admins and Users along with their password hashes
+* Configure `fqdn`
+* Configure IP settings, if you need manual config
+* Configure `Admins`, `Users` along with their password hashes
+* Configure `mailadmin` password hash. The user is used to provide admin-access to Mailboxes (WIP)
 
 ## Base
 Run below playbooks in order
 * system.yml ( `ansible-playbook -i inventory system.yml` )
-* syspatch.yml ( `ansible-playbook -i inventory system.yml -e "update=true"` )
+* syspatch.yml ( `ansible-playbook -i inventory syspatch.yml -e "update=true"` )
 * ssh.yml ( `ansible-playbook -i inventory ssh.yml` )
 * pf.yml ( `ansible-playbook -i inventory pf.yml` )
-* httpd.yml ( `ansible-playbook -i inventory httpd.yml -e "httpd_use_tls=false" -e "httpd_use_lets_encrypt=yes"` )
+* httpd.yml ( `ansible-playbook -i inventory httpd.yml -e "httpd_use_tls=false" -e "httpd_use_lets_encrypt=true"` )
 * acme-client.yml ( `ansible-playbook -i inventory acme-client.yml` )
-* httpd.yml ( `ansible-playbook -i inventory httpd.yml -e "httpd_use_tls=true" -e "httpd_use_lets_encrypt=yes"` )
+* httpd.yml ( `ansible-playbook -i inventory httpd.yml -e "httpd_use_tls=true" -e "httpd_use_lets_encrypt=true"` )
 * Configure inventory to no longer use passwords: `ansible_user=puffy ansible_ssh_private_key=~/.ssh/id_ecdsa`
 
 ## Mail
