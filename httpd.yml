@@ -23,12 +23,11 @@
         name: httpd
         state: started
         enabled: yes
-      # when: '"OK" in httpd_validate.stdout'
       tags: httpd
 
     - name: httpd - Reload httpd
       service:
         name: httpd
         state: reloaded
-      when: '"OK" in httpd_validate.stdout and httpd_config_results is changed'
+      when: httpd_validate is changed and httpd_config_results is changed
       tags: httpd
