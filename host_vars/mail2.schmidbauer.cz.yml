@@ -3,10 +3,10 @@ mail_domain: schmidbauer.cz
 update: true
 
 admins:
-  - { name: puffy, pass: "$2b$09$rNEtwCuzLuvyIINfE1Z/EOZpusDJ21iI/RQRYOwBkc6cAJcXg7yOK" , key: "{{ lookup('file', '~/.ssh/id_ecdsa.pub') }}" }
+  - { name: puffy, pass: "$2b$09$OrnsezebLKBNuMqdhe7neujp8yvEKTvKPA3BDlZRVodNOCFRFYKse" , key: "{{ lookup('file', '~/.ssh/id_ecdsa.pub') }}" }
 
 users:
-  - { name: stefan, pass: "$2b$09$8dbRJ5mjxoVw1oAqgLR2sujIZKfnuBvZGtwlUJnVIakDsszhzpJgi" }
+  - { name: stefan, pass: "$2b$09$8Z9TxWQ3OMklHI1SEMHfcuqGjevVVYMBsT0LB9CN0PsgCyHrejAmO" }
 
 host_aliases:
   - www2.schmidbauer.cz
@@ -23,7 +23,7 @@ ipv6_autoconf: true
 # ipv6:
 #   addr: 2001:19f0:6c01:6b3:5400:02ff:feeb:91fc
 #   netmask: /64
-#   gw: 
+#   gw:
 
 httpd_use_tls: true # Only set to true once the certificate is actually generated!
 httpd_use_lets_encrypt: true
