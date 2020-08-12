@@ -47,6 +47,7 @@ Run below playbooks in order
 
 ## Mail
 Run below playbooks in order
+* dkim.yml ( `ansible-playbook -i inventory dkim.yml` )
 * rspamd.yml ( `ansible-playbook -i inventory rspamd.yml` )
 * smtpd.yml ( `ansible-playbook -i inventory smtpd.yml` )
 * dovecot.yml ( `ansible-playbook -i inventory dovecot.yml` )

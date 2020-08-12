@@ -160,7 +160,7 @@ dkim_version: 1
 dkim_key_folder: /etc/mail/dkim
 dkim_key_algo: rsa
 dkim_key_size: 1024
-dkim_signing_allow_username_mismatch: true
+dkim_signing_allow_username_mismatch: 'true'
 
 dmarc_version: 1
 dmarc_policy: quarantine
