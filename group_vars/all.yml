@@ -9,7 +9,6 @@ extra_packages:
 
 host_aliases:
   - www2.schmidbauer.cz
-  - stream2.schmidbauer.cz
 
 admins:
   - { name: puffy, pass: "$2b$09$OrnsezebLKBNuMqdhe7neujp8yvEKTvKPA3BDlZRVodNOCFRFYKse" , key: "{{ lookup('file', '~/.ssh/id_ecdsa.pub') }}" }
@@ -75,7 +74,7 @@ httpd_use_tls: false # Only set to true once the certificate is actually generat
 httpd_use_lets_encrypt: true
 httpd_enforce_tls: true # Except for Let's Encrypt that is
 httpd_redirect_default_vhost: true
-httpd_redirect_default_vhost_destination: https://cloud.schmidbauer.cz/index.php/apps/rainloop/
+httpd_redirect_default_vhost_destination: https://webmail.schmidbauer.cz
 
 sysctl:
   - { name: "net.inet.ip.forwarding",   value: 1 }
