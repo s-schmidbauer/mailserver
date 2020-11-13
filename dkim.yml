@@ -25,7 +25,7 @@
 
     - name: DKIM - Check if DKIM key exists
       stat:
-        path: "{{ dkim_key_folder }}/{{ fqdn }}.key"
+        path: "{{ dkim_key_folder }}/{{ mail_domain }}.key"
       register: dkim_key_exists
 
     - name: DKIM - Create DKIM key
