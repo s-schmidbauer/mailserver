@@ -1,12 +1,13 @@
 # OpenBSD based mail server (smtpd, dovecot, rspamd, sieve).
 # Setup using ansible.
 
-`Tested with: OpenBSD 6.7`
+`Tested with: OpenBSD 6.7 and 6.8`
 
 For support, contact [www.schmidbauer.cz](https://www.schmidbauer.cz)
 
 ## General Setup
 * Configure a new server running OpenBSD 6.7 (i. e. [www.vultr.com](https://www.vultr.com/?ref=7294151) )
+* Python 3 on new client and server
 * Setup your DNS for: A, AAAA and reverse records
 * Later, once tested and working fine you can also create an MX records for your domain
 * Make sure the new server is ssh-able
@@ -21,7 +22,7 @@ Run playbooks in below order.
 * Normal visitors can do HTTP and HTTPs as well as known mail ports
 * Prepare an inventory for your server like so
 ```
-[mail2.schmidbauer.cz]
+[all_hosts]
 1.2.3.4 ansible_python_interpreter=/usr/local/bin/python3 ansible_port=22 ansible_user=root ansible_ssh_private_key=~/.ssh/id_ecdsa
 ```
 * ..Or create an ansible inventory using: `ansible_user=root ansible_ssh_password=secret`  .. if you need to use root and a password.
