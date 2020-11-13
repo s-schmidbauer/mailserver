@@ -29,7 +29,7 @@
       register: dkim_key_exists
 
     - name: DKIM - Create DKIM key
-      command: ssh-keygen -t {{ dkim_key_algo }} -f "{{ dkim_key_folder }}/{{ fqdn }}.key" -b {{ dkim_key_size }} -q -N ""
+      command: openssl genrsa -out "{{ dkim_key_folder }}/{{ mail_domain }}.key" {{ dkim_key_size }}
       tags: dkim
       when: not dkim_key_exists.stat.exists
 
