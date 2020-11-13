@@ -9,5 +9,5 @@ inet6 autoconf -autoconfprivacy -soii
 {% endif %}
 {% if ipv6_autoconf == false %}
 inet6 autoconf -autoconfprivacy -soii
-inet6 {{ ipv6.addr }} {{ ipv6.netmask }}
+inet6 alias {{ ipv6.addr }} {{ ipv6.netmask }}
 {% endif %}
