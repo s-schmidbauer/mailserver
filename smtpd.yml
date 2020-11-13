@@ -30,9 +30,8 @@
       when: smtpd_templates is changed
       tags: smtpd
 
-    - name: smtpd - Start smtpd
+    - name: smtpd - Ensure smtpd is started
       service:
         name: smtpd
         state: started
-        enabled: yes
       tags: smtpd
