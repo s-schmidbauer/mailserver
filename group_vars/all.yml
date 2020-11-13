@@ -2,10 +2,11 @@
 fqdn: mail2.schmidbauer.cz
 host: mail2
 mail_domain: schmidbauer.cz
-
-update: False # patch the system
+install_url: https://cdn.openbsd.org/pub/OpenBSD
+update: Yes # patch the system
 extra_packages:
   - pftop
+  - rsync
 
 host_aliases:
   - www2.schmidbauer.cz
@@ -48,10 +49,13 @@ pf_all_hosts_ports:
   - 443
 
 pf_trusted_hosts:
-  - 194.228.20.0/24
+  - 85.207.44.182
+  - 193.235.207.51
+
+pf_default_ports:
+  - 22
 
 pf_trusted_hosts_ports:
-  - 22
   - 5666
 
 tls_ciphers: EECDH+AESGCM:EDH+AESGCM # httpd, smtpd, dovecot
@@ -95,8 +99,8 @@ smtpd_warn_interval: 1h, 6h, 2d
 
 smtpd_domains:
   - schmidbauer.cz
-  - cloud.schmidbauer.cz
   - mail.schmidbauer.cz
+  - mail2.schmidbauer.cz
   - man.schmidbauer.cz
 
 smtp_aliases:
@@ -104,7 +108,7 @@ smtp_aliases:
    - { name: hello,                         target: stefan }
    - { name: hallo,                         target: stefan }
    - { name: ahoj,                          target: stefan }
-   - { name: puff,                          target: stefan }
+   - { name: puffy,                         target: stefan }
    - { name: monitoring,                    target: stefan }
    - { name: stefan@schmidbauer.cz,         target: stefan }
    - { name: anna@schmidbauer.cz,           target: anna }
@@ -112,7 +116,6 @@ smtp_aliases:
    - { name: mattias@schmidbauer.cz,        target: mattias }
    - { name: hans@schmidbauer.cz,           target: hans }
    - { name: angelika@schmidbauer.cz,       target: angelika }
-   - { name: chiemseewelle@schmidbauer.cz,  target: chiemseewelle }
 
 smtp_filters:
    # - { name: check_dyndns, command: "phase connect match rdns regex { '.*\.dyn\..*', '.*\.dsl\..*', '.*\.glas\..*' } junk" }
@@ -135,8 +138,8 @@ rspamd_packages:
    - 'opensmtpd-filter-senderscore'
 
 dovecot_packages:
-   - dovecot
-   - dovecot-pigeonhole
+   - 'dovecot'
+   - 'dovecot-pigeonhole'
 
 dovecot_auth_mechanisms: plain
 dovecot_auth_failure_delay: 5

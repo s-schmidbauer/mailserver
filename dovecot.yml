@@ -12,7 +12,7 @@
         state: present
       tags: dovecot
 
-    - name: "Dovecot - Template {{ item }}"
+    - name: "Dovecot - Template config files"
       template:
         src: "dovecot/{{ item }}"
         dest: "/etc/dovecot/conf.d/{{ item }}"

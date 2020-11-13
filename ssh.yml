@@ -14,7 +14,7 @@
       shell: rcctl enable sshd
       tags: ssh
 
-    - name: "SSH - set authorized keys for admin {{ item.value.name }}"
+    - name: "SSH - set authorized keys for admin users"
       authorized_key:
         user: "{{ item.name }}"
         state: present

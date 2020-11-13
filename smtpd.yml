@@ -6,7 +6,7 @@
   become_method: doas
 
   tasks:
-    - name: "smtpd - Template {{ item }}"
+    - name: "smtpd - Template config files"
       template:
         src: "smtpd/{{ item }}"
         dest: "/etc/mail/{{ item }}"
