@@ -135,6 +135,10 @@ rspamd_packages:
    - 'opensmtpd-filter-rspamd'
    - 'opensmtpd-filter-senderscore'
 
+dovecot_packages:
+   - dovecot
+   - dovecot-pigeonhole
+
 dovecot_auth_mechanisms: plain
 dovecot_auth_failure_delay: 5
 dovecot_first_valid_uid: 1000

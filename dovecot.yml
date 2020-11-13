@@ -8,11 +8,8 @@
   tasks:
     - name: Dovecot - Install packages
       openbsd_pkg:
-        name: "{{ item }}"
+        name: "{{ dovecot_packages | join(', ') }}"
         state: present
-      with_items:
-        - dovecot
-        - dovecot-pigeonhole
       tags: dovecot
 
     - name: "Dovecot - Template {{ item }}"
