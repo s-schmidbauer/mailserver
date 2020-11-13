@@ -12,13 +12,8 @@
 
     - name: Rspamd - Install packages
       openbsd_pkg:
-        name: "{{ item }}"
+        name: "{{ rspamd_packages | join(', ') }}"
         state: present
-      with_items:
-        - redis
-        - rspamd
-        - opensmtpd-filter-rspamd
-        - opensmtpd-filter-senderscore
       tags: rspamd
 
     - name: Rspamd - Create folder /etc/rspamd/local.d

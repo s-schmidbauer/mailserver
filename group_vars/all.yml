@@ -129,6 +129,12 @@ smtp_used_filters:
    - senderscore
    - rspamd
 
+rspamd_packages:
+   - 'redis'
+   - 'rspamd'
+   - 'opensmtpd-filter-rspamd'
+   - 'opensmtpd-filter-senderscore'
+
 dovecot_auth_mechanisms: plain
 dovecot_auth_failure_delay: 5
 dovecot_first_valid_uid: 1000
