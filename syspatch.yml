@@ -19,8 +19,9 @@
       tags: syspatch
 
     - name: Syspatch - install extra packages
-      openbsd_pkg: name={{ item }} state=present
-      with_items: "{{ extra_packages }}"
+      openbsd_pkg:
+        name: "{{ extra_packages | join(', ') }}"
+        state: present
       when: extra_packages is defined
       register: extra_packages_result
       tags: syspatch
