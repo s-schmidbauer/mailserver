@@ -2,11 +2,11 @@
 dhcp
 {% endif %}
 {% if ipv4_autoconf == false %}
-inet {{ ip4.address }} {{ ip4.netmask }}
+inet {{ ipv4.addr }} {{ ipv4.netmask }}
 {% endif %}
 {% if ipv6_autoconf == true %}
 inet6 autoconf -autoconfprivacy -soii
 {% endif %}
 {% if ipv6_autoconf == false %}
-inet6 {{ ip6.address }} {{ ip6.netmask }}
+inet6 {{ ipv6.addr }} {{ ipv6.netmask }}
 {% endif %}

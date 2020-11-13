@@ -1,6 +1,6 @@
 {% if ipv4_autoconf == false %}
-{{ ip4.gw }}
+{{ ipv4.gw }}
 {% endif %}
 {% if ipv6_autoconf == false %}
-{{ ip6.gw }}
+{{ ipv6.gw }}
 {% endif %}

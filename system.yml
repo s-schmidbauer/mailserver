@@ -32,6 +32,7 @@
     - name: System - Restart NIC
       shell: sh /etc/netstart {{ ext_if }}
       when: config_network is changed
+      ignore_errors: true
       tags: sys
 
     - name: System - Get ifconfig for IPv4
