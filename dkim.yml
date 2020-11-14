@@ -28,18 +28,32 @@
         path: "{{ dkim_key_folder }}/{{ mail_domain }}.key"
       register: dkim_key_exists
 
-    - name: DKIM - Create DKIM key
+    - name: DKIM - Create DKIM private key
       command: openssl genrsa -out "{{ dkim_key_folder }}/{{ mail_domain }}.key" {{ dkim_key_size }}
+      tags: dkim
+      when: not dkim_key_exists.stat.exists
+
+    - name: DKIM - Set permissions for DKIM private key (for pub key generation)
+      file:
+        path: "{{ dkim_key_folder }}/{{ mail_domain }}.key"
+        state: directory
+        owner: root
+        group: root
+        mode: '0400'
+      tags: dkim
+
+    - name: DKIM - Create DKIM public key
+      command: ssh-keygen -y -f "{{ dkim_key_folder }}/{{ mail_domain }}.key" > "{{ dkim_key_folder }}/{{ mail_domain }}.key.pub"
       tags: dkim
       when: not dkim_key_exists.stat.exists
 
     - name: DKIM - Set permissions for DKIM key
       file:
-        path: "{{ dkim_key_folder }}"
+        path: "{{ dkim_key_folder }}/{{ mail_domain }}.key"
         state: directory
         owner: root
         group: _rspamd
-        mode: '0640'
+        mode: '0440'
       tags: dkim
 
 # mail dkim record to admin
