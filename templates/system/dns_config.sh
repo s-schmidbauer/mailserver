@@ -3,7 +3,7 @@ ip=$(dig -t A +short {{ fqdn }})
 ip6=$(dig -t AAAA +short {{ fqdn }})
 resolver=8.8.8.8
 selector=$(date +"%Y%m%d")
-pubkey=$(cat /etc/mail/dkim/{{ mail_domain }}.key.pub | cut -d' ' -f 2  | tr -d '\n')
+pubkey=$(cat {{ dkim_key_folder}}/{{ mail_domain }}.pub | cut -d' ' -f 2  | tr -d '\n')
 tlsa=$(ldns-dane -r $resolver create {{ fqdn }} 443 {{ tlsa_usage }} | cut -d' ' -f4)
 
 echo "Forward record:"

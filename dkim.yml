@@ -43,7 +43,7 @@
       tags: dkim
 
     - name: DKIM - Create DKIM public key
-      command: ssh-keygen -y -f "{{ dkim_key_folder }}/{{ mail_domain }}.key" > "{{ dkim_key_folder }}/{{ mail_domain }}.key.pub"
+      command: openssl rsa -in "{{ dkim_key_folder }}/{{ mail_domain }}.key" -pubout > "{{ dkim_key_folder }}/{{ mail_domain }}.pub"
       tags: dkim
       when: not dkim_key_exists.stat.exists
 
