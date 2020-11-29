@@ -37,3 +37,17 @@
       tags: acme
       # when: acme_result_aliases.rc == 0 or acme_result_aliases.rc == 2
       ignore_errors: True
+
+    - name: "ACME - Generate MTA-STS TLS certificate"
+      command: "acme-client mta-sts.{{ mail_domain }}"
+      tags: acme
+      register: acme_result_mta_sts
+      when: mta_sts|bool == true
+      failed_when: acme_result_aliases.rc == 1 or acme_result_aliases.rc > 2
+
+    - name: "ACME - Generate MTA-STS OCSP file"
+      command: "ocspcheck -No /etc/ssl/mta-sts.{{ mail_domain }}.der /etc/ssl/mta-sts.{{ mail_domain }}.fullchain.pem"
+      when: mta_sts|bool == true
+      tags: acme
+      # when: acme_result_aliases.rc == 0 or acme_result_aliases.rc == 2
+      ignore_errors: True

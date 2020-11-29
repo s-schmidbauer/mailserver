@@ -1,0 +1,13 @@
+---
+- name: Configure MTA-STS
+  hosts: all_hosts
+  user: puffy
+  become: true
+  become_method: doas
+
+  tasks:
+    - name: MTA-STS - Template policy
+      template:
+        src: "mta-sts/mta-sts.txt.j2"
+        dest: "/var/www/mta-sts"
+      tags: mta-sts
