@@ -53,6 +53,7 @@ Run below playbooks in order
 * smtpd.yml ( `ansible-playbook -i inventory smtpd.yml` )
 * dovecot.yml ( `ansible-playbook -i inventory dovecot.yml` )
 * sieve.yml ( `ansible-playbook -i inventory sieve.yml` )
+* mta-sts.yml ( `ansible-playbook -i inventory mta-sts.yml` )
 
 # And finally
 * Configure SPF, DMARC, DKIM and more later with help of:

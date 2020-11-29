@@ -188,7 +188,7 @@ tlsa_ports: "443 143 25 587 993 465"
 mta_sts: true
 mta_sts_version: STSv1
 mta_sts_mode: testing     # testing, enforce or none
-mta_sts_max_age: 604800
+mta_sts_max_age: 604800   # 1 week
 mta_sts_mxs:
   - mail.schmidbauer.cz
   - mail2.schmidbauer.cz
