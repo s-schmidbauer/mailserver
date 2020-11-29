@@ -6,8 +6,15 @@
   become_method: doas
 
   tasks:
+    - name: MTA-STS - Create directory
+      file:
+        path: "/var/www/mta-sts/"
+        state: directory
+        mode: '0750'
+      tags: mta-sts
+
     - name: MTA-STS - Template policy
       template:
         src: "mta-sts/mta-sts.txt.j2"
-        dest: "/var/www/mta-sts"
+        dest: "/var/www/mta-sts/mta-sts.txt"
       tags: mta-sts
