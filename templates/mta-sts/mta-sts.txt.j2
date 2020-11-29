@@ -1,0 +1,6 @@
+version: {{ mta_sts_version }}
+mode: {{ mta_sts_mode }}
+{% for mx in mta_sts_mxs %}
+mx: {{ mx }}
+{% endfor %}
+max_age: {{ mta_sts_max_age }}
