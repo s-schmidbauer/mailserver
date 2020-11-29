@@ -29,3 +29,5 @@ httpd_use_lets_encrypt: true
 httpd_enforce_tls: true # Except for Let's Encrypt that is
 httpd_redirect_default_vhost: true
 httpd_redirect_default_vhost_destination: https://webmail.schmidbauer.cz
+
+mta_sts: true

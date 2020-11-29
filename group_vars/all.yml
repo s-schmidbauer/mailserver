@@ -7,6 +7,7 @@ update: Yes # patch the system
 extra_packages:
   - pftop
   - rsync
+  - curl
 
 host_aliases:
   - www2.schmidbauer.cz
@@ -185,7 +186,7 @@ spf_scope: all
 tlsa_usage: "3 1 1"
 tlsa_ports: "443 143 25 587 993 465"
 
-mta_sts: true
+mta_sts: false
 mta_sts_version: STSv1
 mta_sts_mode: testing     # testing, enforce or none
 mta_sts_max_age: 604800   # 1 week
