@@ -37,7 +37,7 @@
 
     - name: Rspamd - Start and enable rspamd services
       service:
-        name: rspamd
+        name: "{{ item }}"
         state: started
         enabled: yes
       with_items:
