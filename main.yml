@@ -43,5 +43,8 @@
     - name: Configure sieve
       import_tasks: sieve.yml
 
+    - name: Configure mta-sts
+      import_tasks: mta-sts.yml
+
     - name: DNS setup helper
       import_tasks: dns-setup.yml

@@ -22,6 +22,7 @@ daemon:	root
 ftp-bugs: root
 operator: root
 www:	root
+admin: root
 
 # Redirections for pseudo accounts that should not receive mail
 _bgpd: /dev/null
