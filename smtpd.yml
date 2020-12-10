@@ -34,4 +34,5 @@
       service:
         name: smtpd
         state: started
+        enabled: yes
       tags: smtpd
