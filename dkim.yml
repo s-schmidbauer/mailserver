@@ -36,9 +36,9 @@
     - name: DKIM - Set permissions for DKIM private key (for pub key generation)
       file:
         path: "{{ dkim_key_folder }}/{{ mail_domain }}.key"
-        state: directory
+        state: file
         owner: root
-        group: root
+        group: wheel
         mode: '0400'
       tags: dkim
 
@@ -50,7 +50,7 @@
     - name: DKIM - Set permissions for DKIM key
       file:
         path: "{{ dkim_key_folder }}/{{ mail_domain }}.key"
-        state: directory
+        state: file
         owner: root
         group: _rspamd
         mode: '0440'

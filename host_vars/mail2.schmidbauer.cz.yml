@@ -3,13 +3,14 @@ mail_domain: schmidbauer.cz
 update: true
 
 admins:
-  - { name: puffy, pass: "$2b$09$OrnsezebLKBNuMqdhe7neujp8yvEKTvKPA3BDlZRVodNOCFRFYKse" , key: "{{ lookup('file', '~/.ssh/id_ecdsa.pub') }}" }
+  - { name: puffy, pass: "$2b$09$OrnsezebLKBNuMqdhe7neujp8yvEKTvKPA3BDlZRVodNOCFRFYKse" , key: "{{ lookup('file', '~/.ssh/id_ed25519.pub') }}" }
 
 users:
   - { name: stefan, pass: "$2b$09$8Z9TxWQ3OMklHI1SEMHfcuqGjevVVYMBsT0LB9CN0PsgCyHrejAmO" }
 
 host_aliases:
   - www2.schmidbauer.cz
+  - ns2.schmidbauer.cz
 
 ipv4_autoconf: true
 ipv6_autoconf: true

@@ -52,6 +52,7 @@ pf_all_hosts_ports:
 pf_trusted_hosts:
   - 85.207.44.182
   - 193.235.207.51
+  - 46.23.90.145
 
 pf_default_ports:
   - 22
