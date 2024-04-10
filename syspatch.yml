@@ -9,6 +9,7 @@
     - name: Syspatch - install system updates
       shell: syspatch
       register: system_update_results
+      failed_when: system_update_results.rc not in [ 0, 2 ]
       tags: syspatch
 
     - name: Syspatch - install package updates
@@ -20,7 +21,10 @@
 
     - name: Syspatch - install extra packages
       openbsd_pkg:
-        name: "{{ extra_packages | join(', ') }}"
+        name: 
+          - pftop
+          - rsync-3.2.7p1
+          - curl
         state: present
       when: extra_packages is defined
       register: extra_packages_result
