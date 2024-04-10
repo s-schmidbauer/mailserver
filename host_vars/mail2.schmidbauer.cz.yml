@@ -10,7 +10,6 @@ users:
 
 host_aliases:
   - www2.schmidbauer.cz
-  - ns2.schmidbauer.cz
 
 ipv4_autoconf: true
 ipv6_autoconf: true
@@ -29,4 +28,4 @@ httpd_enforce_tls: true # Except for Let's Encrypt that is
 httpd_redirect_default_vhost: true
 httpd_redirect_default_vhost_destination: https://webmail.schmidbauer.cz
 
-mta_sts: true
+mta_sts: false
