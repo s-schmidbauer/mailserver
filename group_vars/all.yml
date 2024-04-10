@@ -139,11 +139,12 @@ smtp_filters:
    - { name: senderscore,   command: "proc-exec 'filter-senderscore -blockBelow 10 -junkBelow 70 -slowFactor 5000'" }
    - { name: rspamd,        command: "proc-exec 'filter-rspamd'" }
 
+# with senderscore, tune carefully
 smtp_used_filters:
    # - check_dyndns
    - check_rdns
    - check_fcrdns
-   - senderscore
+   #- senderscore
    - rspamd
 
 rspamd_packages:
