@@ -6,7 +6,7 @@ install_url: https://cdn.openbsd.org/pub/OpenBSD
 update: Yes # patch the system
 extra_packages:
   - pftop
-  - rsync
+  - rsync-3.2.7p1
   - curl
 
 host_aliases:
