@@ -10,20 +10,17 @@ users:
 
 host_aliases:
   - www2.schmidbauer.cz
-  - ns2.schmidbauer.cz
 
 ipv4_autoconf: true
 ipv6_autoconf: true
 
-# ipv4:
-#   addr: 193.235.207.51
-#   netmask: 255.255.255.0
-#   gw: 193.235.207.1
+ipv4_addr: 199.247.3.242
+ipv4_netmask: 255.255.254.0
+ipv4_gw: 199.247.2.1
 #
-# ipv6:
-#   addr: 2001:19f0:6c01:6b3:5400:02ff:feeb:91fc
-#   netmask: /64
-#   gw:
+ipv6_addr: 2001:19f0:6c01:2bde:5400:04ff:feda:e590
+ipv6_netmask: /64
+#ipv6_gw:
 
 httpd_use_tls: true # Only set to true once the certificate is actually generated!
 httpd_use_lets_encrypt: true
@@ -31,4 +28,4 @@ httpd_enforce_tls: true # Except for Let's Encrypt that is
 httpd_redirect_default_vhost: true
 httpd_redirect_default_vhost_destination: https://webmail.schmidbauer.cz
 
-mta_sts: true
+mta_sts: false

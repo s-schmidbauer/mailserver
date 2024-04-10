@@ -12,7 +12,11 @@
 
     - name: Rspamd - Install packages
       openbsd_pkg:
-        name: "{{ rspamd_packages | join(', ') }}"
+        name:
+          - 'redis'
+          - 'rspamd-3.8.4'
+          - 'opensmtpd-filter-rspamd'
+          - 'opensmtpd-filter-senderscore'
         state: present
       tags: rspamd
 

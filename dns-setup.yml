@@ -23,9 +23,13 @@
       tags: dns-config
 
     - name: DNS helper - Run script
-      shell: "/usr/local/bin/dns_config.sh > /tmp/dns_config.out"
+      shell: "/usr/local/bin/dns_config.sh > /tmp/dns_config.out && cat /tmp/dns_config.out"
       register: dns_config
       tags: dns-config
+
+    - name: DNS helper - Show script output
+      debug:
+        var: dns_config.stdout_lines
 
     # - name: DNS helper - Mail output to defined contact
     #   mail:

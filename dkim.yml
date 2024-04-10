@@ -43,9 +43,20 @@
       tags: dkim
 
     - name: DKIM - Create DKIM public key
-      command: openssl rsa -in "{{ dkim_key_folder }}/{{ mail_domain }}.key" -pubout > "{{ dkim_key_folder }}/{{ mail_domain }}.pub"
+      command: openssl rsa -in "{{ dkim_key_folder }}/{{ mail_domain }}.key" -pubout -out "{{ dkim_key_folder }}/{{ mail_domain }}.pub"
       tags: dkim
-      when: not dkim_key_exists.stat.exists
+
+    - name: DKIM - Output DKIM public key
+      shell: cat {{ dkim_key_folder }}/{{ mail_domain }}.pub | head -n 5 | tail -n 4 | tr -d '\n'
+      register: dkim_pub_key_output
+
+    - name: DKIM - Show DKIM public key
+      debug:
+        var: dkim_pub_key_output.stdout_lines
+
+    - name: DKIM - Show DKIM selector
+      debug:
+        var: dkim_timestamp
 
     - name: DKIM - Set permissions for DKIM key
       file:

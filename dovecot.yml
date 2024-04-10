@@ -8,7 +8,9 @@
   tasks:
     - name: Dovecot - Install packages
       openbsd_pkg:
-        name: "{{ dovecot_packages | join(', ') }}"
+        name:
+          - dovecot-2.3.21v0
+          - dovecot-pigeonhole-0.5.21v1
         state: present
       tags: dovecot
 

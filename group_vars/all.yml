@@ -6,7 +6,7 @@ install_url: https://cdn.openbsd.org/pub/OpenBSD
 update: Yes # patch the system
 extra_packages:
   - pftop
-  - rsync
+  - rsync-3.2.7p1
   - curl
 
 host_aliases:
@@ -48,6 +48,19 @@ pf_all_hosts_ports:
   - 22
   - 80
   - 443
+
+pf_bad_ports:
+  - 23
+  - 2000
+  - 2323
+  - 992
+  - 8123
+  - 5071
+  - 7443
+  - 139
+  - 1433
+  - 1080
+  - 3389
 
 pf_trusted_hosts:
   - 85.207.44.182
@@ -126,11 +139,12 @@ smtp_filters:
    - { name: senderscore,   command: "proc-exec 'filter-senderscore -blockBelow 10 -junkBelow 70 -slowFactor 5000'" }
    - { name: rspamd,        command: "proc-exec 'filter-rspamd'" }
 
+# with senderscore, tune carefully
 smtp_used_filters:
    # - check_dyndns
    - check_rdns
    - check_fcrdns
-   - senderscore
+   #- senderscore
    - rspamd
 
 rspamd_packages:

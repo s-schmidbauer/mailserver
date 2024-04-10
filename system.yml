@@ -79,7 +79,7 @@
 
     - name: System - Install crontab from file
       shell: cat /etc/crontab.txt | crontab -
-      register: crontab-file
+      register: crontab_file
       tags: sys
 
     - name: System - Template backup maildir script
