@@ -41,6 +41,7 @@ Run below playbooks in order
 * syspatch.yml ( `ansible-playbook -i inventory syspatch.yml -e "update=true"` )
 * ssh.yml ( `ansible-playbook -i inventory ssh.yml` )
 * pf.yml ( `ansible-playbook -i inventory pf.yml` )
+* from here on, create your A and AAAA for allowing cert creation
 * httpd.yml ( `ansible-playbook -i inventory httpd.yml -e "httpd_use_tls=false" -e "httpd_use_lets_encrypt=true"` )
 * acme-client.yml ( `ansible-playbook -i inventory acme-client.yml` )
 * httpd.yml ( `ansible-playbook -i inventory httpd.yml -e "httpd_use_tls=true" -e "httpd_use_lets_encrypt=true"` )
