@@ -54,6 +54,10 @@
       debug:
         var: dkim_pub_key_output.stdout_lines
 
+    - name: DKIM - Show DKIM selector
+      debug:
+        var: dkim_timestamp
+
     - name: DKIM - Set permissions for DKIM key
       file:
         path: "{{ dkim_key_folder }}/{{ mail_domain }}.key"
