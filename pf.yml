@@ -13,6 +13,48 @@
       register: pf_config
       tags: pf
 
+    - name: PF - download pf-badhost
+      get_url:
+         url: https://www.geoghegan.ca/pub/pf-badhost/latest/pf-badhost.sh
+         dest: /usr/local/bin/pf-badhost.sh
+         mode: '0755'
+      when: pf_badhost_enabled
+
+    - name: PF - pf-badhost touch file
+      file:
+        path: /etc/pf-badhost.txt
+        owner: _pfbadhost
+        group: wheel
+        mode: '0640'
+      when: pf_badhost_enabled
+
+    - name: PF - pf-badhost touch log dir
+      file:
+        path: /var/log/pf-badhost
+        owner: _pfbadhost
+        group: wheel
+        mode: '0750'
+        state: directory 
+      when: pf_badhost_enabled
+
+    - name: PF - pf-badhost touch log file
+      file:
+        path: /var/log/pf-badhost/pf-badhost.log
+        owner: _pfbadhost
+        group: wheel
+        mode: '0640'
+        state: touch
+      when: pf_badhost_enabled
+
+    - name: PF - pf-badhost cronjob
+      cron:
+        name: "pf-badhost cronjob"
+        hour: "1~2"
+        minute: "*"
+        job: "/usr/local/bin/pf-badhost.sh -O openbsd -H 3"
+        user: _pfbadhost
+      when: pf_badhost_enabled
+
     - name: PF - check config
       shell: pfctl -nf /etc/pf.conf
       register: pf_result
