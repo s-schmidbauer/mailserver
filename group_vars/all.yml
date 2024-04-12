@@ -49,6 +49,8 @@ pf_all_hosts_ports:
   - 80
   - 443
 
+pf_badhost_enabled: true
+
 pf_bad_ports:
   - 23
   - 2000
@@ -71,7 +73,10 @@ pf_default_ports:
   - 22
 
 pf_trusted_hosts_ports:
-  - 5666
+  - 22
+  - 443
+  - 80
+  - 3306
 
 tls_ciphers: EECDH+AESGCM:EDH+AESGCM # httpd, smtpd, dovecot
 tls_ecdhe: P-384,P-256,X25519 # httpd
