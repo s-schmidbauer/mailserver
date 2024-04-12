@@ -146,7 +146,7 @@ smtp_aliases:
 smtp_filters:
    - { name: dnsbl,       command: "proc-exec 'filter-dnsbl bl.spamcop.net'" }
    #- { name: check_dyndns, command: "phase connect match rdns regex { '.*\.dyn\..*', '.*\.dsl\..*', '.*\.glas\..*' } junk" }
-   - { name: senderscore,   command: "proc-exec 'filter-senderscore -allowlist /etc/pf-smtp-white.conf -junkBelow 40 -slowFactor 5000'" }
+   - { name: senderscore,   command: "proc-exec 'filter-senderscore -allowlist /etc/pf-smtp-white.txt -junkBelow 40 -slowFactor 5000'" }
    - { name: check_rdns,    command: "phase connect match !rdns junk" }
    - { name: check_fcrdns,  command: "phase connect match !fcrdns junk" }
    - { name: rspamd,        command: "proc-exec 'filter-rspamd'" }
@@ -165,6 +165,7 @@ pf_smtp_white_domains:
    - amazon.com
    - edis.at
    - rb.cz
+   - mxtoolboxsmtpdiag.com
 
 rspamd_packages:
    - 'redis'
