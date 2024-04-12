@@ -26,6 +26,11 @@
           - rsync-3.2.7p1
           - curl
           - unzip
+          - 'redis'
+          - 'rspamd'
+          - 'opensmtpd-filter-rspamd'
+          - 'opensmtpd-filter-senderscore'
+          - 'opensmtpd-filter-dnsbl'
         state: present
       when: extra_packages is defined
       register: extra_packages_result
