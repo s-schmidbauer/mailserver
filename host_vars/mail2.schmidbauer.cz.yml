@@ -28,6 +28,7 @@ ipv6_netmask: /64
 #ipv6_gw:
 
 httpd_block_bad_locations: true
+httpd_default_mime_types: true
 httpd_use_tls: true # Only set to true once the certificate is actually generated!
 httpd_use_lets_encrypt: true
 httpd_enforce_tls: true # Except for Let's Encrypt that is
