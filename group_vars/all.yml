@@ -8,6 +8,7 @@ extra_packages:
   - pftop
   - rsync-3.2.7p1
   - curl
+  - unzip
 
 host_aliases:
   - www2.schmidbauer.cz
@@ -50,6 +51,8 @@ pf_all_hosts_ports:
   - 443
 
 pf_badhost_enabled: true
+pf_nixspam_enabled: true
+pf_smtp_white_enabled: true
 
 pf_bad_ports:
   - 23
@@ -153,6 +156,12 @@ smtp_used_filters:
    - check_fcrdns
    #- senderscore
    - rspamd
+
+pf_smtp_white_domains:
+   - google.com
+   - amazon.com
+   - edis.at
+   - rb.cz
 
 rspamd_packages:
    - 'redis'

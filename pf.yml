@@ -6,11 +6,45 @@
   become_method: doas
 
   tasks:
-    - name: "PF - configure /etc/pf.conf"
+    - name: PF - configure /etc/pf.conf
       template:
         src: "system/pf.conf"
         dest: "/etc/pf.conf"
       register: pf_config
+      tags: pf
+
+    - name: PF - configure SMTP white list
+      template:
+        src: "system/pf-smtp-white.txt"
+        dest: "/etc/pf-smtp-white.txt"
+        mode: "0440"
+      register: pf_smtp_white_config
+      when: pf_smtp_white_enabled
+      tags: pf
+
+    - name: PF - populate SMTP white list PF table
+      shell: cat /etc/pf-smtp-white.txt | smtpctl spf walk | pfctl -t smtpwhite -T add -f -
+      register: pf_smtp_white_populate
+      when: pf_smtp_white_enabled
+      tags: pf
+
+    - name: PF - download nixspam IP dump
+      get_url:
+         url: https://www.nixspam.net/download/nixspam-ip.dump.gz
+         dest: /tmp/nixspam-ip.dump.gz
+         mode: '0440'
+      when: pf_nixspam_enabled
+      tags: pf
+
+    - name: PF - unpack nixspam IP dump
+      shell: gunzip -f /tmp/nixspam-ip.dump.gz
+      when: pf_nixspam_enabled
+      tags: pf
+
+    - name: PF - format nixspam IP dump and output to file
+      shell: cat /tmp/nixspam-ip.dump | cut -f2 -d' ' | sort > /etc/pf-nixspam.txt
+      register: pf_nixspam_format_result
+      when: pf_nixspam_enabled
       tags: pf
 
     - name: PF - download pf-badhost

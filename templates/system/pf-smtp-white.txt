@@ -1,0 +1,5 @@
+{% if pf_smtp_white_enabled %}
+{% for domain in pf_smtp_white_domains %}
+{{ domain }}
+{% endfor %}
+{% endif %}
