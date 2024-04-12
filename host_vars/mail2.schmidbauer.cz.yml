@@ -6,6 +6,11 @@ admins:
   - { name: puffy, pass: "$2b$09$OrnsezebLKBNuMqdhe7neujp8yvEKTvKPA3BDlZRVodNOCFRFYKse" , key: "{{ lookup('file', '~/.ssh/id_ed25519.pub') }}" }
 
 users:
+  - { name: angelika, pass: "$2b$10$EGAHD8QJs4WQrnBI5hNdB.mab0XTeiXtc.c/x6IOYfzl7xNu.KDKi" }
+  - { name: anna, pass: "$2b$10$tePzITH.0hVtCM4LBK4aHubfvuhX.M.mJBjn2jHZjtXrRXERSjDIS" }
+  - { name: hans, pass: "$2b$10$P0GoFW9wP1bg4sgZbZfBbuuvRnYnQ.zu.UiWdn3fIdB0X/ucNXrpm" }
+  - { name: mattias, pass: "$2b$10$aav7PS/fWjzFuvyWWPE6v.nM2o6kLxL/FbcU7jNSZQzr8aknpkeT6" }
+  - { name: max, pass: "$2b$10$E7xN/AONpcApybQ6r5fl/.ugl1Gxa1QvbK1Awdegv0ZhvAaalT9Jq" }
   - { name: stefan, pass: "$2b$09$8Z9TxWQ3OMklHI1SEMHfcuqGjevVVYMBsT0LB9CN0PsgCyHrejAmO" }
 
 host_aliases:
@@ -22,6 +27,8 @@ ipv6_addr: 2001:19f0:6c01:2bde:5400:04ff:feda:e590
 ipv6_netmask: /64
 #ipv6_gw:
 
+httpd_block_bad_locations: true
+httpd_default_mime_types: true
 httpd_use_tls: true # Only set to true once the certificate is actually generated!
 httpd_use_lets_encrypt: true
 httpd_enforce_tls: true # Except for Let's Encrypt that is

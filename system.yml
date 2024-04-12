@@ -77,6 +77,14 @@
       with_items: "{{ users }}"
       tags: sys
 
+    - name: System - Create pf-badhost user with password
+      user:
+        name: "_pfbadhost"
+        password: "lookup('ansible.builtin.password', '/dev/null', chars=['ascii_lowercase', 'digits'], length=12)"
+      no_log: true
+      tags: sys
+      when: pf_badhost_enabled
+
     - name: System - Install crontab from file
       shell: cat /etc/crontab.txt | crontab -
       register: crontab_file

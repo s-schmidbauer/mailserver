@@ -8,6 +8,7 @@ extra_packages:
   - pftop
   - rsync-3.2.7p1
   - curl
+  - unzip
 
 host_aliases:
   - www2.schmidbauer.cz
@@ -49,6 +50,10 @@ pf_all_hosts_ports:
   - 80
   - 443
 
+pf_badhost_enabled: true
+pf_nixspam_enabled: true
+pf_smtp_white_enabled: true
+
 pf_bad_ports:
   - 23
   - 2000
@@ -71,7 +76,10 @@ pf_default_ports:
   - 22
 
 pf_trusted_hosts_ports:
-  - 5666
+  - 22
+  - 443
+  - 80
+  - 3306
 
 tls_ciphers: EECDH+AESGCM:EDH+AESGCM # httpd, smtpd, dovecot
 tls_ecdhe: P-384,P-256,X25519 # httpd
@@ -89,6 +97,9 @@ ssh_kex_algos: "curve25519-sha256@libssh.org,ecdh-sha2-nistp521,ecdh-sha2-nistp3
 ssh_ciphers: "chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr"
 ssh_macs: "hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com"
 
+httpd_default_mime_types: true
+httpd_block_bad_locations: true
+httpd_use_catchall: true
 httpd_use_tls: false # Only set to true once the certificate is actually generated!
 httpd_use_lets_encrypt: true
 httpd_enforce_tls: true # Except for Let's Encrypt that is
@@ -104,8 +115,8 @@ sysctl:
 cronjobs:
    - { name: "install system patches",      special_time: "weekly",   job: "syspatch"  }
    - { name: "install package updates",     special_time: "weekly",   job: "pkg_add -u"  }
-   - { name: "mail backup",                 special_time: "weekly",   job: "/usr/local/bin/mail_backup.sh"  }
-   - { name: "delete older mail backups",   special_time: "daily",    job: "find {{ backup_location }} -mtime +14 -type d -maxdepth 1 -name 'maildir-*' -delete" }
+   #- { name: "mail backup",                 special_time: "weekly",   job: "/usr/local/bin/mail_backup.sh"  }
+   #- { name: "delete older mail backups",   special_time: "daily",    job: "find {{ backup_location }} -mtime +14 -type d -maxdepth 1 -name 'maildir-*' -delete" }
 
 mail_max_size: 50M # used in smtpd and dovecot
 smtpd_max_deferred: 1000
@@ -133,25 +144,34 @@ smtp_aliases:
    - { name: angelika@schmidbauer.cz,       target: angelika }
 
 smtp_filters:
-   # - { name: check_dyndns, command: "phase connect match rdns regex { '.*\.dyn\..*', '.*\.dsl\..*', '.*\.glas\..*' } junk" }
+   - { name: dnsbl,       command: "proc-exec 'filter-dnsbl bl.spamcop.net'" }
+   #- { name: check_dyndns, command: "phase connect match rdns regex { '.*\.dyn\..*', '.*\.dsl\..*', '.*\.glas\..*' } junk" }
+   - { name: senderscore,   command: "proc-exec 'filter-senderscore -allowlist /etc/pf-smtp-white.conf -junkBelow 40 -slowFactor 5000'" }
    - { name: check_rdns,    command: "phase connect match !rdns junk" }
    - { name: check_fcrdns,  command: "phase connect match !fcrdns junk" }
-   - { name: senderscore,   command: "proc-exec 'filter-senderscore -blockBelow 10 -junkBelow 70 -slowFactor 5000'" }
    - { name: rspamd,        command: "proc-exec 'filter-rspamd'" }
 
-# with senderscore, tune carefully
+# with senderscore: tune carefully
 smtp_used_filters:
+   - dnsbl
    # - check_dyndns
-   - check_rdns
-   - check_fcrdns
+   #- check_rdns
+   #- check_fcrdns
    #- senderscore
    - rspamd
+
+pf_smtp_white_domains:
+   - google.com
+   - amazon.com
+   - edis.at
+   - rb.cz
 
 rspamd_packages:
    - 'redis'
    - 'rspamd'
    - 'opensmtpd-filter-rspamd'
    - 'opensmtpd-filter-senderscore'
+   - 'opensmtpd-filter-dnsbl'
 
 dovecot_packages:
    - 'dovecot'

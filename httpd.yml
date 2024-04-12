@@ -6,6 +6,13 @@
   become_method: doas
 
   tasks:
+    - name: "httpd - Configure /etc/httpd-bad-locations.conf"
+      template:
+        src: "httpd-bad-locations.conf"
+        dest: "/etc/httpd-bad-locations.conf"
+      register: httpd_bad_locations_config_results
+      tags: httpd
+
     - name: "httpd - Configure /etc/httpd.conf"
       template:
         src: "httpd.conf"
@@ -16,6 +23,7 @@
     - name: httpd - Valdidate config
       shell: "/usr/sbin/httpd -n"
       register: httpd_validate
+      changed_when: httpd_validate.rc!=0
       tags: httpd
 
     - name: httpd - Start and enable httpd
@@ -29,5 +37,5 @@
       service:
         name: httpd
         state: reloaded
-      when: httpd_validate is changed and httpd_config_results is changed
+      when: httpd_config_results is changed
       tags: httpd
