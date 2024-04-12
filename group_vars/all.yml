@@ -106,8 +106,8 @@ sysctl:
 cronjobs:
    - { name: "install system patches",      special_time: "weekly",   job: "syspatch"  }
    - { name: "install package updates",     special_time: "weekly",   job: "pkg_add -u"  }
-   - { name: "mail backup",                 special_time: "weekly",   job: "/usr/local/bin/mail_backup.sh"  }
-   - { name: "delete older mail backups",   special_time: "daily",    job: "find {{ backup_location }} -mtime +14 -type d -maxdepth 1 -name 'maildir-*' -delete" }
+   #- { name: "mail backup",                 special_time: "weekly",   job: "/usr/local/bin/mail_backup.sh"  }
+   #- { name: "delete older mail backups",   special_time: "daily",    job: "find {{ backup_location }} -mtime +14 -type d -maxdepth 1 -name 'maildir-*' -delete" }
 
 mail_max_size: 50M # used in smtpd and dovecot
 smtpd_max_deferred: 1000
