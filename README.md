@@ -11,7 +11,11 @@ For support, contact [www.schmidbauer.cz](https://www.schmidbauer.cz)
 * Setup your DNS for: A, AAAA and reverse records
 * Later, once tested and working fine you can also create an MX records for your domain
 * Make sure the new server is ssh-able
-* Have ansible >=2.8 on your laptop
+
+## Extra features
+* IP blocking with NixSpam
+* IP blocking with PF-badhost
+* IP white listing for mail traffic
 
 Run playbooks in below order.
 
@@ -20,6 +24,7 @@ Run playbooks in below order.
 * Admins have ssh keys to connect. They are copied from your workstation.
 * Authorized, trusted IPs can manage and monitor. Add them to `pf_trusted_hosts`
 * Normal visitors can do HTTP and HTTPs as well as known mail ports
+* ssh to your host, install python3 like `pkg_add python3`
 * Prepare an inventory for your server like so
 ```
 [all_hosts]
@@ -83,4 +88,7 @@ Run below playbooks in order
 ## Big shoutouts to
 * The guys working on [OpenBSD](https://www.openbsd.org)
 * [Gilles Chehade](https://www.poolp.org) for his amazing work in `smtpd`
-* [horia](https://github.com/vedetta-com) for this amazing efforts with `caesonia` and `vedetta`
+* [horia](https://github.com/vedetta-com) for his amazing efforts with `caesonia` and `vedetta`
+* [Jordan Geoghegan](https://www.geoghegan.ca) for his great tool pf-badhost
+
+
