@@ -100,7 +100,7 @@ ssh_macs: "hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-
 httpd_default_mime_types: true
 httpd_block_bad_locations: true
 httpd_use_catchall: true
-httpd_use_tls: false # Only set to true once the certificate is actually generated!
+httpd_use_tls: true # Only set to true once the certificate is actually generated!
 httpd_use_lets_encrypt: true
 httpd_enforce_tls: true # Except for Let's Encrypt that is
 httpd_redirect_default_vhost: true
@@ -166,6 +166,7 @@ pf_smtp_white_domains:
    - edis.at
    - rb.cz
    - mxtoolboxsmtpdiag.com
+   - internet.nl
 
 rspamd_packages:
    - 'redis'
