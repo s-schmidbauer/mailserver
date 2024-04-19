@@ -3,7 +3,7 @@ fqdn: mail2.schmidbauer.cz
 host: mail2
 mail_domain: schmidbauer.cz
 install_url: https://cdn.openbsd.org/pub/OpenBSD
-update: Yes # patch the system
+update: true # patch the system
 extra_packages:
   - pftop
   - rsync-3.2.7p1
@@ -38,12 +38,11 @@ delete_backups_older: 6
 
 #  TECHNICAL SETTINGS
 ext_if: vio0
-net_speed: 125M # 1 Gbit
-net_speed_cap: 100M
+#net_speed: 125M # 1 Gbit
+#net_speed_cap: 100M
 
-pf_max_src_conn: 100
-pf_max_src_conn_rate: 50/5
-pf_max_src_high_conn_rate: 100/5
+pf_max_src_conn: 200
+pf_max_src_conn_rate: 100/5
 
 pf_all_hosts_ports:
   - 22
@@ -111,6 +110,7 @@ sysctl:
   - { name: "net.inet6.ip6.forwarding", value: 1 }
   - { name: "net.inet6.ip6.redirect",   value: 1 }
   - { name: "ddb.panic",                value: 0 }
+  - { name: "kern.maxfiles",            value: 16000 }
 
 cronjobs:
    - { name: "install system patches",      special_time: "weekly",   job: "syspatch"  }
