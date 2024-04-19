@@ -33,6 +33,13 @@
       when: pf_smtp_white_enabled
       tags: pf
 
+    - name: PF - set SMTP white list permissions for smtpd use
+      file: 
+        path: /etc/pf-smtp-white.txt
+        mode: '0644'
+      when: pf_smtp_white_enabled
+      tags: pf
+
 
     - name: PF - download nixspam IP dump
       get_url:
