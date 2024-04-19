@@ -9,12 +9,13 @@ extra_packages:
   - rsync-3.2.7p1
   - curl
   - unzip
+  - gunzip
 
 host_aliases:
   - www2.schmidbauer.cz
 
 admins:
-  - { name: puffy, pass: "$2b$09$OrnsezebLKBNuMqdhe7neujp8yvEKTvKPA3BDlZRVodNOCFRFYKse" , key: "{{ lookup('file', '~/.ssh/id_ecdsa.pub') }}" }
+  - { name: puffy, pass: "$2b$09$OrnsezebLKBNuMqdhe7neujp8yvEKTvKPA3BDlZRVodNOCFRFYKse" , key: "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAE16RDWXX5lZUTYR27vK4jtmDximUhsVkay0EzB/1+xe3fVHKh0oqygfVSKL0pxvWC55b87XQt8J0+nNUF01xYOnABrz78nWd7TzXXudqsZIfvY7xCRoQ9ecZgWPaokIuc+TJW+zBfUeWDVx8Pd3rRIWJK4emH8ynLQFSC7bdsPkwzFhQ==" }
 
 users:
   - { name: stefan, pass: "$2b$09$8Z9TxWQ3OMklHI1SEMHfcuqGjevVVYMBsT0LB9CN0PsgCyHrejAmO" }
@@ -22,17 +23,6 @@ users:
 
 ipv4_autoconf: true
 ipv6_autoconf: true
-
-# ipv4:
-#   addr: 1.2.3.4
-#   netmask: 255.255.255.0
-#   gw: 1.2.3.1
-#
-# ipv6:
-#   addr: 2001:abcd:abcd:abcd::
-#   netmask: /64
-#   gw:
-
 backup_location: /home/backupuser
 delete_backups_older: 6
 
