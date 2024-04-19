@@ -127,7 +127,6 @@ smtpd_domains:
   - schmidbauer.cz
   - mail.schmidbauer.cz
   - mail2.schmidbauer.cz
-  - man.schmidbauer.cz
 
 smtp_aliases:
    - { name: cloud,                         target: stefan }
@@ -142,11 +141,12 @@ smtp_aliases:
    - { name: mattias@schmidbauer.cz,        target: mattias }
    - { name: hans@schmidbauer.cz,           target: hans }
    - { name: angelika@schmidbauer.cz,       target: angelika }
+   - { name: _pfbadhost@schmidbauer.cz,     target: stefan }
 
 smtp_filters:
    - { name: dnsbl,       command: "proc-exec 'filter-dnsbl bl.spamcop.net'" }
    #- { name: check_dyndns, command: "phase connect match rdns regex { '.*\.dyn\..*', '.*\.dsl\..*', '.*\.glas\..*' } junk" }
-   - { name: senderscore,   command: "proc-exec 'filter-senderscore -allowlist /etc/pf-smtp-white.txt -junkBelow 40 -slowFactor 5000'" }
+   #- { name: senderscore,   command: "proc-exec 'filter-senderscore -allowlist /etc/pf-smtp-white.txt -junkBelow 40 -slowFactor 5000'" }
    - { name: check_rdns,    command: "phase connect match !rdns junk" }
    - { name: check_fcrdns,  command: "phase connect match !fcrdns junk" }
    - { name: rspamd,        command: "proc-exec 'filter-rspamd'" }
