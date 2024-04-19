@@ -44,6 +44,8 @@
 
     - name: "Dovecot - Make aliases"
       shell: newaliases
+      register: dovecot_newaliases
+      changed_when: dovecot_newaliases.rc not in [0]
       tags: dovecot
 
     - name: Dovecot - Start dovecot
@@ -56,6 +58,7 @@
     - name: Dovecot - Valdidate config
       shell: "/usr/local/bin/doveconf -n"
       register: dovecot_validate
+      changed_when: dovecot_validate.rc not in [0]
       tags: dovecot
 
     - name: Dovecot - Restart dovecot when changed and config valid
