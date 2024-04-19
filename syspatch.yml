@@ -10,6 +10,7 @@
       shell: syspatch
       register: system_update_results
       failed_when: system_update_results.rc not in [ 0, 2 ]
+      changed_when: system_update_results.rc in [0]
       tags: syspatch
 
     - name: Syspatch - install package updates
@@ -26,11 +27,11 @@
           - rsync-3.2.7p1
           - curl
           - unzip
-          - 'redis'
-          - 'rspamd'
-          - 'opensmtpd-filter-rspamd'
-          - 'opensmtpd-filter-senderscore'
-          - 'opensmtpd-filter-dnsbl'
+          - redis
+          - rspamd
+          - opensmtpd-filter-rspamd
+          - opensmtpd-filter-senderscore
+          - opensmtpd-filter-dnsbl
         state: present
       when: extra_packages is defined
       register: extra_packages_result
