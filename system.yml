@@ -39,11 +39,13 @@
     - name: System - Get ifconfig for IPv4
       shell: ifconfig {{ ext_if }} | grep 'inet ' | cut -d ' ' -f 2
       register: ipv4_result
+      changed_when: ipv4_result.rc not in [0]
       tags: sys
 
     - name: System - Get ifconfig for IPv6
       shell: ifconfig {{ ext_if }} | grep 'inet6 ' | cut -d ' ' -f 2 | cut -d '%' -f 1
       register: ipv6_result
+      changed_when: ipv6_result.rc not in [0]
       tags: sys
 
     - name: "System - Set IP facts"
@@ -88,6 +90,7 @@
     - name: System - Install crontab from file
       shell: cat /etc/crontab.txt | crontab -
       register: crontab_file
+      changed_when: crontab_file.rc not in [0]
       tags: sys
 
     - name: System - Template backup maildir script

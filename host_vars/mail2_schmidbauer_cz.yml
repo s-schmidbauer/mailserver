@@ -3,7 +3,7 @@ mail_domain: schmidbauer.cz
 update: true
 
 admins:
-  - { name: puffy, pass: "$2b$09$OrnsezebLKBNuMqdhe7neujp8yvEKTvKPA3BDlZRVodNOCFRFYKse" , key: "{{ lookup('file', '~/.ssh/id_ed25519.pub') }}" }
+  - { name: puffy, pass: "$2b$09$OrnsezebLKBNuMqdhe7neujp8yvEKTvKPA3BDlZRVodNOCFRFYKse" , key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINWPhRrFyc2RPg246rKTBGjyX/bMwWHTHqtd7eLHrujt" }
 
 users:
   - { name: angelika, pass: "$2b$10$EGAHD8QJs4WQrnBI5hNdB.mab0XTeiXtc.c/x6IOYfzl7xNu.KDKi" }
@@ -18,11 +18,9 @@ host_aliases:
 
 ipv4_autoconf: true
 ipv6_autoconf: true
-
 ipv4_addr: 199.247.3.242
 ipv4_netmask: 255.255.254.0
 ipv4_gw: 199.247.2.1
-#
 ipv6_addr: 2001:19f0:6c01:2bde:5400:04ff:feda:e590
 ipv6_netmask: /64
 #ipv6_gw:
