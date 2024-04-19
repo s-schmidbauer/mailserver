@@ -16,17 +16,30 @@
     - name: PF - configure SMTP white list
       template:
         src: "system/pf-smtp-white.txt"
-        dest: "/etc/pf-smtp-white.txt"
+        dest: "/etc/pf-smtp-white-input.txt"
         mode: "0440"
       register: pf_smtp_white_config
       when: pf_smtp_white_enabled
       tags: pf
 
     - name: PF - populate SMTP white list PF table
-      shell: cat /etc/pf-smtp-white.txt | smtpctl spf walk | pfctl -t smtpwhite -T add -f -
+      shell: cat /etc/pf-smtp-white-input.txt | smtpctl spf walk | pfctl -t smtpwhite -T add -f -
       register: pf_smtp_white_populate
       when: pf_smtp_white_enabled
       tags: pf
+
+    - name: PF - output SMTP white list PF table for smtpd use
+      shell: pfctl -t smtpwhite -T show > /etc/pf-smtp-white.txt
+      when: pf_smtp_white_enabled
+      tags: pf
+
+    - name: PF - set SMTP white list permissions for smtpd use
+      file: 
+        path: /etc/pf-smtp-white.txt
+        mode: '0644'
+      when: pf_smtp_white_enabled
+      tags: pf
+
 
     - name: PF - download nixspam IP dump
       get_url:

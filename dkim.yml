@@ -6,9 +6,9 @@
   become_method: doas
 
   tasks:
-    - name: DKIM - Create timestamp for dkim_singing.conf
+    - name: DKIM - Create datestamp for dkim_singing.conf
       set_fact:
-         dkim_timestamp: "{{ lookup('pipe','date +%d%m%Y%H%M') }}"
+         dkim_timestamp: "{{ lookup('pipe','date +%d%m%Y') }}"
 
     - name: DKIM - Make sure ldns-utils is installed
       openbsd_pkg:

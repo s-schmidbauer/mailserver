@@ -5,9 +5,9 @@ dhcp
 inet {{ ipv4_addr }} {{ ipv4_netmask }}
 {% endif %}
 {% if ipv6_autoconf == true %}
-inet6 autoconf -autoconfprivacy -soii
+inet6 autoconf -soii -temporary
 {% endif %}
 {% if ipv6_autoconf == false %}
-inet6 autoconf -autoconfprivacy -soii
+inet6 autoconf -soii -temporary
 inet6 alias {{ ipv6_addr }} {{ ipv6_netmask }}
 {% endif %}

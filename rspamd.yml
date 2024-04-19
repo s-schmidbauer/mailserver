@@ -6,9 +6,9 @@
   become_method: doas
 
   tasks:
-    - name: Rspamd - Create timestamp for dkim_singing.conf
+    - name: Rspamd - Create datestamp for dkim_singing.conf
       set_fact:
-         dkim_timestamp: "{{ lookup('pipe','date +%d%m%Y%H%M') }}"
+         dkim_timestamp: "{{ lookup('pipe','date +%d%m%Y') }}"
 
     - name: Rspamd - Install packages
       openbsd_pkg:
