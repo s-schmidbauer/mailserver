@@ -1,0 +1,23 @@
+---
+- name: Configure easyrsa
+  hosts: all_hosts
+  user: puffy
+  become: true
+  become_method: doas
+
+  tasks:
+    - name: "easyrsa - create pki folder"
+      file:
+        path: "/etc/ssl/pki"
+        state: directory
+
+    - name: "easyrsa - get required files from PKI"
+      get_url:
+        url: "https://pub.schmidbauer.cz/{{ item }}"
+        dest: "/etc/ssl/pki/{{ item }}"
+        validate_certs: false
+      with_items:
+        - ca.crt
+        - ca.crl
+      tags: easyrsa
+      register: easyrsa_pki_files
