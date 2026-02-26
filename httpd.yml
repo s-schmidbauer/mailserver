@@ -13,11 +13,19 @@
       register: httpd_bad_locations_config_results
       tags: httpd
 
-    - name: "httpd - Configure /etc/httpd.conf"
+    - name: "httpd - Configure extra vhosts"
       template:
         src: "httpd.conf"
         dest: "/etc/httpd.conf"
       register: httpd_config_results
+      tags: httpd
+
+    - name: "httpd - Configure /etc/httpd.conf"
+      template:
+        src: "httpd.{{ item }}.conf"
+        dest: "/etc/httpd.{{ item }}.conf"
+      with_items: "{{ httpd_extra_vhosts }}"
+      register: httpd_extra_vhosts_results
       tags: httpd
 
     - name: httpd - Valdidate config
