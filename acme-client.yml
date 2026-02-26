@@ -20,10 +20,10 @@
       changed_when: acme_result.rc not in [2]
       ignore_errors: True
 
-    - name: "ACME - Generate OCSP files"
-      shell: "ocspcheck -No /etc/ssl/{{ fqdn }}.der /etc/ssl/{{ fqdn }}.fullchain.pem"
-      tags: acme
-      when: acme_result.rc == 0 or acme_result.rc == 2
+    #- name: "ACME - Generate OCSP files"
+    #  shell: "ocspcheck -No /etc/ssl/{{ fqdn }}.der /etc/ssl/{{ fqdn }}.fullchain.pem"
+    #  tags: acme
+    #  when: acme_result.rc == 0 or acme_result.rc == 2
 
     - name: "ACME - Generate alias TLS certificate"
       command: "acme-client {{ item }}"
@@ -33,12 +33,12 @@
       failed_when: acme_result_aliases.rc == 1 or acme_result_aliases.rc > 2
       changed_when: acme_result_aliases.rc not in [2]
 
-    - name: "ACME - Generate alias OCSP files"
-      command: "ocspcheck -No /etc/ssl/{{ item }}.der /etc/ssl/{{ item }}.fullchain.pem"
-      with_items: "{{ host_aliases }}"
-      tags: acme
-      # when: acme_result_aliases.rc == 0 or acme_result_aliases.rc == 2
-      ignore_errors: True
+    #- name: "ACME - Generate alias OCSP files"
+    #  command: "ocspcheck -No /etc/ssl/{{ item }}.der /etc/ssl/{{ item }}.fullchain.pem"
+    #  with_items: "{{ host_aliases }}"
+    #  tags: acme
+    #  # when: acme_result_aliases.rc == 0 or acme_result_aliases.rc == 2
+    #  ignore_errors: True
 
     - name: "ACME - Generate MTA-STS TLS certificate"
       command: "acme-client mta-sts.{{ mail_domain }}"
@@ -48,9 +48,9 @@
       failed_when: acme_result_mta_sts.rc == 1 or acme_result_mta_sts.rc > 2
       changed_when: acme_result_mta_sts.rc not in [2]
 
-    - name: "ACME - Generate MTA-STS OCSP file"
-      command: "ocspcheck -No /etc/ssl/mta-sts.{{ mail_domain }}.der /etc/ssl/mta-sts.{{ mail_domain }}.fullchain.pem"
-      when: mta_sts|bool == true
-      tags: acme
-      # when: acme_result_aliases.rc == 0 or acme_result_aliases.rc == 2
-      ignore_errors: True
+    #- name: "ACME - Generate MTA-STS OCSP file"
+    #  command: "ocspcheck -No /etc/ssl/mta-sts.{{ mail_domain }}.der /etc/ssl/mta-sts.{{ mail_domain }}.fullchain.pem"
+    #  when: mta_sts|bool == true
+    #  tags: acme
+    #  # when: acme_result_aliases.rc == 0 or acme_result_aliases.rc == 2
+    #  ignore_errors: True
