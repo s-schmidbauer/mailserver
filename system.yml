@@ -20,6 +20,7 @@
         - profile
         - sysctl.conf
         - crontab.txt
+        - resolv.conf
       tags: sys
 
     - name: "System - Configure network"

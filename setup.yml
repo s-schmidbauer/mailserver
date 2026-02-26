@@ -1,10 +1,14 @@
-- name: Configure mailserver
+- name: Setup mailserver
   hosts: all_hosts
   user: puffy
   become: true
   become_method: doas
 
   tasks:
+    - name: Don't use TLS yet
+      set_fact:
+         httpd_use_tls: false
+
     - name: Configure base system
       import_tasks: system.yml
 
@@ -20,6 +24,13 @@
     - name: Configure acme-client
       import_tasks: acme-client.yml
 
+    - name: Enable TLS usage now
+      set_fact:
+         httpd_use_tls: true
+
+    - name: Configure httpd again, to use TLS
+      import_tasks: httpd.yml
+
     - name: Configure rspamd
       import_tasks: rspamd.yml
 
@@ -34,3 +45,6 @@
 
     - name: Configure mta-sts
       import_tasks: mta-sts.yml
+
+    - name: DNS setup helper
+      import_tasks: dns-setup.yml
