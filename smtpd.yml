@@ -15,6 +15,7 @@
         - creds
         - domains
         - smtpd.conf
+        - responder
       tags: smtpd
       register: smtpd_templates
 
