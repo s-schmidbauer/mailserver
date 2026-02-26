@@ -9,8 +9,8 @@
     - name: Dovecot - Install packages
       openbsd_pkg:
         name:
-          - dovecot-2.3.21v0
-          - dovecot-pigeonhole-0.5.21v1
+          - dovecot--
+          - dovecot-pigeonhole--
         state: present
       tags: dovecot
 
