@@ -1,3 +1,4 @@
 *.retry
 inventory
 local_inventory
+host_vars/*
