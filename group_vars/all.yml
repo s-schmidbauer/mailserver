@@ -4,11 +4,18 @@ host: mail2
 mail_domain: schmidbauer.cz
 install_url: https://cdn.openbsd.org/pub/OpenBSD
 update: true # patch the system
+
 extra_packages:
   - pftop
   - rsync--
   - curl
   - unzip--
+
+nameservers:
+  - 108.61.10.10
+  - 2001:19f0:300:1704::6
+  - 1.1.1.1
+  - 8.8.8.8
 
 #host_aliases:
 #  - www2.schmidbauer.cz
