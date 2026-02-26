@@ -1,0 +1,26 @@
+---
+- name: Configure wireguard
+  hosts: all_hosts
+  user: puffy
+  become: true
+  become_method: doas
+
+  tasks:
+    - name: wireguard - Install tools
+      openbsd_pkg:
+        name:
+          - 'wireguard-tools'
+        state: present
+      tags: wireguard
+
+    - name: "wireguard - Template hostname.wg0"
+      template:
+        src: "wireguard/hostname.wg0"
+        dest: "/etc/hostname.wg0"
+      tags: wireguard
+      register: wireguard_templates
+
+    - name: wireguard - Restart wireguard interface when changed
+      shell: sh /etc/netstart wg0
+      when: wireguard_templates is changed
+      tags: wireguard
