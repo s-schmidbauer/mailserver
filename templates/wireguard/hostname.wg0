@@ -1,0 +1,9 @@
+wgkey {{ wireguard_private_key }}
+inet {{ wireguard_ipv4_net }}.1/{{ wireguard_ipv4_mask }}
+inet6 {{ wireguard_ipv6_net }}1/{{ wireguard_ipv6_mask}}
+wgport {{ wireguard_port }}
+up
+
+{% for wg_peer in wireguard_peers %}
+wgpeer {{wg_peer.pub_key}} wgaip {{ wireguard_ipv4_net }}.{{wg_peer.ipv4}}/{{wireguard_ipv4_mask}} wgaip {{ wireguard_ipv6_net }}{{wg_peer.ipv6}}/{{wireguard_ipv6_mask}} wgpka {{ wireguard_pka }}
+{% endfor %}
