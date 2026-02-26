@@ -10,11 +10,12 @@
       set_fact:
          dkim_timestamp: "{{ lookup('pipe','date +%d%m%Y') }}"
 
+    ## trailing '--' selects default flavor 
     - name: Rspamd - Install packages
       openbsd_pkg:
         name:
           - 'redis'
-          - 'rspamd-3.8.4'
+          - 'rspamd--'
           - 'opensmtpd-filter-rspamd'
           - 'opensmtpd-filter-senderscore'
         state: present

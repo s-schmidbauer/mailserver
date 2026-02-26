@@ -6,13 +6,12 @@ install_url: https://cdn.openbsd.org/pub/OpenBSD
 update: true # patch the system
 extra_packages:
   - pftop
-  - rsync-3.2.7p1
+  - rsync--
   - curl
-  - unzip
-  - gunzip
+  - unzip--
 
-host_aliases:
-  - www2.schmidbauer.cz
+#host_aliases:
+#  - www2.schmidbauer.cz
 
 admins:
   - { name: puffy, pass: "$2b$09$OrnsezebLKBNuMqdhe7neujp8yvEKTvKPA3BDlZRVodNOCFRFYKse" , key: "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAE16RDWXX5lZUTYR27vK4jtmDximUhsVkay0EzB/1+xe3fVHKh0oqygfVSKL0pxvWC55b87XQt8J0+nNUF01xYOnABrz78nWd7TzXXudqsZIfvY7xCRoQ9ecZgWPaokIuc+TJW+zBfUeWDVx8Pd3rRIWJK4emH8ynLQFSC7bdsPkwzFhQ==" }
@@ -143,12 +142,17 @@ smtp_filters:
 
 # with senderscore: tune carefully
 smtp_used_filters:
-   - dnsbl
-   # - check_dyndns
-   #- check_rdns
-   #- check_fcrdns
+   #- dnsbl
+   #- check_dyndns
+   - check_rdns
+   - check_fcrdns
    #- senderscore
    - rspamd
+
+smtpd_mail_responder_active: True
+smtpd_mail_responder_address: alert@schmidbauer.cz
+smtpd_mail_responder_address_path: /etc/mail/responder
+smtpd_mail_responder_mda_command: /usr/local/bin/mail-responder.sh %{sender} %{rcpt} %{dest}
 
 pf_smtp_white_domains:
    - google.com
@@ -220,3 +224,4 @@ mta_sts_max_age: 604800   # 1 week
 mta_sts_mxs:
   - mail.schmidbauer.cz
   - mail2.schmidbauer.cz
+

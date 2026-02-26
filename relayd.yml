@@ -1,0 +1,29 @@
+---
+- name: Configure relayd
+  hosts: all_hosts
+  user: puffy
+  become: true
+  become_method: doas
+
+  tasks:
+    - name: "relayd - Template config files"
+      template:
+        src: "relayd/relayd.conf"
+        dest: "/etc/relayd.conf"
+      tags: relayd
+      register: relayd_templates
+
+    - name: relayd - Restart relayd when changed
+      service:
+        name: relayd
+        state: reloaded
+        enabled: yes
+      when: relayd_templates is changed
+      tags: relayd
+
+    - name: relayd - Ensure relayd is started
+      service:
+        name: relayd 
+        state: started
+        enabled: yes
+      tags: relayd
