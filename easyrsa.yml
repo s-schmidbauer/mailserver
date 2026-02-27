@@ -8,16 +8,14 @@
   tasks:
     - name: "easyrsa - create pki folder"
       file:
-        path: "/etc/ssl/pki"
+        path: "{{ easyrsa_pki_path }}"
         state: directory
 
     - name: "easyrsa - get required files from PKI"
       get_url:
-        url: "https://pub.schmidbauer.cz/{{ item }}"
-        dest: "/etc/ssl/pki/{{ item }}"
+        url: "https://{{ easyrsa_pki_pub_host }}/{{ item }}"
+        dest: "{{ easyrsa_pki_path }}/{{ item }}"
         validate_certs: false
-      with_items:
-        - ca.crt
-        - ca.crl
+      with_items: "{{ easyrsa_pki_pub_files }}"
       tags: easyrsa
       register: easyrsa_pki_files
