@@ -6,11 +6,13 @@
   become_method: doas
 
   tasks:
-    - name: Syspatch - install system updates
-      shell: syspatch
-      register: system_update_results
-      failed_when: system_update_results.rc not in [ 0, 2 ]
-      changed_when: system_update_results.rc in [0]
+    - name: Syspatch - install extra packages
+      openbsd_pkg:
+        name:
+          '{{ extra_packages }}'
+        state: present
+      when: extra_packages is defined
+      register: extra_packages_result
       tags: syspatch
 
     - name: Syspatch - install package updates
@@ -20,11 +22,9 @@
       register: package_update_results
       tags: syspatch
 
-    - name: Syspatch - install extra packages
-      openbsd_pkg:
-        name: 
-          '{{ extra_packages }}'
-        state: present
-      when: extra_packages is defined
-      register: extra_packages_result
+    - name: Syspatch - install system updates
+      shell: syspatch
+      register: system_update_results
+      failed_when: system_update_results.rc not in [ 0, 2 ]
+      changed_when: system_update_results.rc in [0]
       tags: syspatch

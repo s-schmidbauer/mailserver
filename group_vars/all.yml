@@ -6,9 +6,18 @@ install_url: https://cdn.openbsd.org/pub/OpenBSD
 update: true # patch the system
 
 extra_packages:
-  - pftop
-  - rsync--
+  - acme.sh
+  - base64
   - curl
+  - git
+  - gnupg
+  - jq
+  - pftop
+  - php-8.3.30p0
+  - php-curl-8.3.30
+  - php-sqlite3-8.3.30
+  - redis
+  - rsync--
   - unzip--
 
 nameservers:
