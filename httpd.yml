@@ -6,11 +6,12 @@
   become_method: doas
 
   tasks:
-    - name: "httpd - Configure /etc/httpd-bad-locations.conf"
+    - name: "httpd - Configure blocked locations"
       template:
         src: "httpd-bad-locations.conf"
-        dest: "/etc/httpd-bad-locations.conf"
+        dest: "{{ httpd_bad_locations_path }}"
       register: httpd_bad_locations_config_results
+      when: httpd_block_bad_locations
       tags: httpd
 
     - name: "httpd - Configure /etc/httpd.conf"
