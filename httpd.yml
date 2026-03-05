@@ -38,6 +38,16 @@
       register: httpd_files_htaccess_results
       tags: httpd
 
+    - name: "httpd - Clone repos"
+      git:
+        repo: "{{ item.repo_url }}"
+        dest: "{{ item.dest_path }}"
+        version: "{{ item.branch }}"
+        update: true
+      loop: "{{ httpd_git_repositories }}"
+      register: httpd_clone_results
+      tags: httpd
+
     - name: httpd - Valdidate config
       shell: "/usr/sbin/httpd -n"
       register: httpd_validate
