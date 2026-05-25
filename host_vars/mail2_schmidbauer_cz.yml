@@ -15,22 +15,79 @@ users:
 
 host_aliases:
   - www2.schmidbauer.cz
+  - files2.schmidbauer.cz
+  - ns2.schmidbauer.cz
+  - pub2.schmidbauer.cz
+  - status2.schmidbauer.cz
+  - vpn2.schmidbauer.cz
+  - webmail2.schmidbauer.cz
+  - cards2.schmidbauer.cz
+  - cals2.schmidbauer.cz
+  - webmail2.schmidbauer.cz
+  - openpgpkey.schmidbauer.cz
 
 ipv4_autoconf: true
 ipv6_autoconf: true
-ipv4_addr: 199.247.3.242
+ipv4_addr: 95.179.185.110
 ipv4_netmask: 255.255.254.0
-ipv4_gw: 199.247.2.1
-ipv6_addr: 2001:19f0:6c01:2bde:5400:04ff:feda:e590
+ipv4_gw: 95.179.184.1
+ipv6_addr: 2a05:f480:1400:02ff:5400:05ff:fef6:d71f
 ipv6_netmask: /64
 #ipv6_gw:
 
+easyrsa_pki_path: /etc/ssl/pki 
+easyrsa_pki_pub_host: pub.schmidbauer.cz
+easyrsa_pki_pub_files:
+  - ca.crt
+  - ca.crl
+
 httpd_block_bad_locations: true
-httpd_default_mime_types: true
+httpd_bad_locations_path: /etc/httpd.bad-locations.conf
+httpd_default_mime_types: True
 httpd_use_tls: true # Only set to true once the certificate is actually generated!
 httpd_use_lets_encrypt: true
 httpd_enforce_tls: true # Except for Let's Encrypt that is
-httpd_redirect_default_vhost: true
+httpd_redirect_default_vhost: True
 httpd_redirect_default_vhost_destination: https://webmail.schmidbauer.cz
 
-mta_sts: false
+httpd_git_repositories:
+  - name: "ns"
+    repo_url: "https://github.com/s-schmidbauer/ns.schmidbauer.cz"
+    dest_path: "/var/www/htdocs/ns.schmidbauer.cz"
+    branch: "main"
+  - name: "vpn"
+    repo_url: "https://github.com/s-schmidbauer/vpn.schmidbauer.cz"
+    dest_path: "/var/www/htdocs/vpn.schmidbauer.cz"
+    branch: "master"
+  - name: "www"
+    repo_url: "https://github.com/s-schmidbauer/www.schmidbauer.cz"
+    dest_path: "/var/www/htdocs/www.schmidbauer.cz"
+    branch: "master"
+
+httpd_extra_vhosts:
+  - files
+  - pub
+  - cals
+  # - cards
+  - blog
+  - mail
+  - webmail
+  - vpn
+  - ns
+  - openpgpkey
+
+httpd_files_htaccess_path: /var/www/.fileshtaccess
+httpd_files_users:
+  - { name: 'stefan', hash: '$2b$08$rvYd07EUYOQG.O8IvXsIEOoDHkD3Dd/0Y/H64mobmF6f5JmJMLMtC' }
+
+#mta_sts: false
+
+wireguard_private_key: aFNkBXRvaCxg4qccwAoPGHFhlwhf7UVJ9uTdFwZRhfo=
+wireguard_ipv4_net: 192.168.99
+wireguard_ipv4_mask: 24
+wireguard_ipv6_net: 'fd00::'
+wireguard_ipv6_mask: 64
+wireguard_pka: 20
+wireguard_port: 4433
+wireguard_peers:
+  - { pub_key: "vaoGrDVZYLV36xz5CDLzerGHgiOhJ0AbXfzeUzgZc0g=", ipv4: 2, ipv6: 2 }
